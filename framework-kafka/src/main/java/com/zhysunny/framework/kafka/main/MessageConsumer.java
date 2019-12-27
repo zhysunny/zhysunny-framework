@@ -21,7 +21,7 @@ public class MessageConsumer {
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
         new HeartbeatThread(10000).start();
-        int threadNum = 5;
+        int threadNum = 3;
         String name = "message";
         Output[] outputs = new Output[]{ new ConsoleOutput() };
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);

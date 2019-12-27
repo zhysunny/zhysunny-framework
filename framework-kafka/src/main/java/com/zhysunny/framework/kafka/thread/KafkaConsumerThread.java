@@ -28,34 +28,45 @@ public class KafkaConsumerThread extends Thread {
         this.persist = persist;
     }
 
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output[] outputs) {
+        this(name, kafkaConsumerService, outputs, null);
+        this.setName(name);
+    }
+
     @Override
     public void run() {
         try {
             LOGGER.info("############# {}启动消费者线程 #############", this.getName());
             kafkaConsumerService.createConsumer();
-            List<JSONObject> datas;
+            List<JSONObject> datas = null;
             // 持久化实现类，目前以文件的方式写死，后续有其他方式可以改成可配置
             while (true) {
                 if (Thread.currentThread().isInterrupted()) {
                     break;
                 }
-                // 读取持久化的数据，只有初次加载时会有数据，正常情况下返回空集合
-                datas = persist.read();
-                if (datas.isEmpty()) {
+                if (persist != null) {
+                    // 读取持久化的数据，只有初次加载时会有数据，正常情况下返回空集合
+                    datas = persist.read();
+                }
+                if (datas == null || datas.isEmpty()) {
                     // 拉取kafka数据
                     datas = kafkaConsumerService.poll();
                     if (datas.isEmpty()) {
                         continue;
                     }
-                    // 持久化数据
-                    persist.write(datas);
+                    if (persist != null) {
+                        // 持久化数据
+                        persist.write(datas);
+                    }
                     // 提交offset
-                    kafkaConsumerService.commit();
+                    //                    kafkaConsumerService.commit();
                 }
                 // 开始ES入库步骤
                 kafkaConsumerService.output(datas, outputs);
-                // 持久化文件回滚，相当于删除持久化数据
-                persist.delete();
+                if (persist != null) {
+                    // 持久化文件回滚，相当于删除持久化数据
+                    persist.delete();
+                }
                 datas.clear();
             }
         } catch (Throwable e) {
