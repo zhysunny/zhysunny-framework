@@ -18,6 +18,7 @@
         <module>framework-common</module>
         <module>framework-springboot</module>
         <module>framework-package</module>
+        <module>framework-kafka</module>
     </modules>
 
     <name>Zhysunny Framework</name>
@@ -26,6 +27,7 @@
         <jdk.version>1.8</jdk.version>
         <compiler.encoding>UTF-8</compiler.encoding>
         <argLine>-Dfile.encoding=UTF-8</argLine>
+        <kafka.version>0.9.0.1</kafka.version>
     </properties>
 
     <dependencyManagement>
@@ -39,6 +41,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>framework-springboot</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>framework-kafka</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- module end -->
@@ -73,11 +80,27 @@
     </dependencyManagement>
 
     <dependencies>
+        <!-- commons start -->
         <dependency>
             <groupId>commons-lang</groupId>
             <artifactId>commons-lang</artifactId>
             <version>2.6</version>
         </dependency>
+        <!-- commons end -->
+        <!-- json start -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+        <!-- json end -->
+        <!-- logger start -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.25</version>
+        </dependency>
+        <!-- logger end -->
     </dependencies>
 
     <build>
