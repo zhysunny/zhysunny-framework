@@ -1,5 +1,6 @@
 package com.zhysunny.framework.kafka.thread;
 
+import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,7 @@ public class HeartbeatThread extends Thread {
                 LOGGER.error("{}中断异常", this.getName());
                 Thread.currentThread().interrupt();
             }
+            LOGGER.info("已消费：{}", KafkaConstants.TOTAL.get());
         }
     }
 

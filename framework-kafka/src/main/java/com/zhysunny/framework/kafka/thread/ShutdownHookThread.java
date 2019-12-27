@@ -15,7 +15,7 @@ public class ShutdownHookThread extends Thread {
     @Override
     public void run() {
         // 执行一些程序终止前的操作
-        LOGGER.info("########################## Kafka To ES Shutdown #############################");
+        LOGGER.info("########################## Kafka Client Shutdown #############################");
     }
 
 }

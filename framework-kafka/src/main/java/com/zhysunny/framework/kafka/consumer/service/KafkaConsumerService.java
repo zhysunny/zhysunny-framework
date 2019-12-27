@@ -2,6 +2,8 @@ package com.zhysunny.framework.kafka.consumer.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.util.FileUtils;
+import com.zhysunny.framework.kafka.business.output.Output;
+import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import java.io.IOException;
@@ -48,6 +50,7 @@ public abstract class KafkaConsumerService<K, V> {
         final List<V> datas = new ArrayList<>();
         ConsumerRecords<K, V> records = consumer.poll(LEASE_TIME);
         records.forEach(record -> datas.add(record.value()));
+        KafkaConstants.TOTAL.addAndGet(datas.size());
         return datas;
     }
 
@@ -71,6 +74,17 @@ public abstract class KafkaConsumerService<K, V> {
         } catch (IOException e) {
         } finally {
             FileUtils.close(is);
+        }
+    }
+
+    /**
+     * 消费者的输出
+     * @param datas
+     * @param outputs
+     */
+    public final void output(List<?> datas, Output[] outputs) {
+        for (Output output : outputs) {
+            output.output(datas);
         }
     }
 

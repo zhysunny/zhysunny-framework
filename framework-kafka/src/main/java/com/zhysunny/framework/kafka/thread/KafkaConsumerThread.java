@@ -2,7 +2,6 @@ package com.zhysunny.framework.kafka.thread;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.kafka.business.output.Output;
-import com.zhysunny.framework.kafka.consumer.ConsumerManage;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
 import org.slf4j.Logger;
@@ -54,7 +53,7 @@ public class KafkaConsumerThread extends Thread {
                     kafkaConsumerService.commit();
                 }
                 // 开始ES入库步骤
-//                ConsumerManage.output(datas, outputs);
+                kafkaConsumerService.output(datas, outputs);
                 // 持久化文件回滚，相当于删除持久化数据
                 persist.delete();
                 datas.clear();

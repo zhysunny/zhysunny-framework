@@ -1,4 +1,4 @@
-package com.zhysunny.framework.kafka.producer.service.impl;
+package com.zhysunny.framework.kafka.business.producer;
 
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
 import org.apache.kafka.clients.producer.KafkaProducer;

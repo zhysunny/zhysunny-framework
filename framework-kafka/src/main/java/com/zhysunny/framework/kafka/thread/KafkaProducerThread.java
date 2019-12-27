@@ -11,12 +11,12 @@ import java.util.List;
  * @author 章云
  * @date 2019/9/19 21:17
  */
-public class KafkaProducerThread<E> extends Thread {
+public class KafkaProducerThread extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerThread.class);
 
     private KafkaProducerService kafkaProducerService;
-    private Input<E> input;
+    private Input input;
 
     public KafkaProducerThread(String name, KafkaProducerService kafkaProducerService, Input input) {
         this.setName(name);
@@ -28,7 +28,7 @@ public class KafkaProducerThread<E> extends Thread {
     public void run() {
         try {
             LOGGER.info("############# {}启动生产者线程 #############", this.getName());
-            List<E> datas = input.input();
+            List<?> datas = input.input();
             kafkaProducerService.send(datas);
         } catch (Throwable e) {
             LOGGER.error("{} kafka消费线程异常退出", this.getName(), e);

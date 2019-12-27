@@ -4,8 +4,9 @@ import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.business.input.Input;
 import com.zhysunny.framework.kafka.business.input.impl.RandomString;
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
-import com.zhysunny.framework.kafka.producer.service.impl.KafkaProducerMessageServiceImpl;
+import com.zhysunny.framework.kafka.business.producer.KafkaProducerMessageServiceImpl;
 import com.zhysunny.framework.kafka.thread.KafkaProducerThread;
+import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
 
 /**
  * 生产者测试
@@ -15,13 +16,14 @@ import com.zhysunny.framework.kafka.thread.KafkaProducerThread;
 public class MessageProducer {
 
     public static void main(String[] args) {
+        Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
         int threadNum = 10;
         String name = "message";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         KafkaProducerService<String, String> kafkaProducerService = new KafkaProducerMessageServiceImpl();
         Input<String> input = new RandomString(1000, 1024);
         for (int i = 0; i < threadNum; i++) {
-            threadPools.addThread(new KafkaProducerThread<>(name, kafkaProducerService, input));
+            threadPools.addThread(new KafkaProducerThread(name + i, kafkaProducerService, input));
         }
         threadPools.shutdown();
     }
