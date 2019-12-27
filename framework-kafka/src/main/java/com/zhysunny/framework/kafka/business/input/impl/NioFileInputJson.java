@@ -1,28 +1,24 @@
 package com.zhysunny.framework.kafka.business.input.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.kafka.business.input.Input;
+import com.zhysunny.framework.common.file.NioFileReadWriteJson;
+import com.zhysunny.framework.kafka.business.input.FileInput;
 import java.io.File;
-import java.util.List;
-import static java.util.stream.Collectors.*;
 
 /**
  * 读取文件
  * @author 章云
  * @date 2019/12/27 15:47
  */
-public class NioFileInputJson implements Input<JSONObject> {
-
-    private NioFileInputString input;
+public class NioFileInputJson extends FileInput<JSONObject> {
 
     public NioFileInputJson(File file) {
-        input = new NioFileInputString(file);
+        super(file);
+        this.fileReadWrite = new NioFileReadWriteJson(file);
     }
 
-    @Override
-    public List<JSONObject> input() {
-        return input.input().stream().map(str -> JSON.parseObject(str)).collect(toList());
+    public NioFileInputJson(String filepath) {
+        super(filepath);
+        this.fileReadWrite = new NioFileReadWriteJson(file);
     }
-
 }

@@ -1,5 +1,6 @@
 package com.zhysunny.framework.kafka.business.input;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -9,6 +10,6 @@ import java.util.List;
  */
 public interface Input<E> {
 
-    List<E> input();
+    List<E> input() throws IOException;
 
 }

@@ -1,6 +1,5 @@
 package com.zhysunny.framework.kafka.consumer.service;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.util.FileUtils;
 import com.zhysunny.framework.kafka.business.output.Output;
 import com.zhysunny.framework.kafka.constant.KafkaConstants;
@@ -84,7 +83,11 @@ public abstract class KafkaConsumerService<K, V> {
      */
     public final void output(List<?> datas, Output[] outputs) {
         for (Output output : outputs) {
-            output.output(datas);
+            try {
+                output.output(datas);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.zhysunny.framework.kafka.thread;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhysunny.framework.kafka.business.output.FileOutput;
 import com.zhysunny.framework.kafka.business.output.Output;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
@@ -28,7 +29,7 @@ public class KafkaConsumerThread extends Thread {
         this.persist = persist;
     }
 
-    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output[] outputs) {
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, FileOutput[] outputs) {
         this(name, kafkaConsumerService, outputs, null);
         this.setName(name);
     }

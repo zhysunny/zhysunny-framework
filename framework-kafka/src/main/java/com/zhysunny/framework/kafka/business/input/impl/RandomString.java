@@ -15,7 +15,6 @@ public class RandomString implements Input<String> {
 
     private int total;
     private int size;
-    private Random random = new Random();
 
     public RandomString(int total, int size) {
         this.total = total;
