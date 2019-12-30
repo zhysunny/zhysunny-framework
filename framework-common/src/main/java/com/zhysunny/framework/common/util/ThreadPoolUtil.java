@@ -41,17 +41,7 @@ public class ThreadPoolUtil {
         // 当核心线程数用满时，线程会添加至阻塞队列等待  queue
         // 当阻塞队列满时启动最大线程数  MAX_POOL_SIZE-CORE_POOL_SIZE
         // 如果超过最大线程抛出异常，可实例化RejectedExecutionHandler进行线程数超出处理
-        threadPools = new ThreadPoolExecutor(coreSize, maxSize, KEEP_ALIVE_TIME, TimeUnit.SECONDS, QUEUE, new ThreadFactory() {
-            private AtomicInteger count = new AtomicInteger();
-
-            @Override
-            public Thread newThread(Runnable r) {
-                int c = count.incrementAndGet();
-                Thread t = new Thread(r);
-                t.setName("Common-pool-Thread-" + c);
-                return t;
-            }
-        });
+        threadPools = new ThreadPoolExecutor(coreSize, maxSize, KEEP_ALIVE_TIME, TimeUnit.SECONDS, QUEUE);
     }
 
     /**

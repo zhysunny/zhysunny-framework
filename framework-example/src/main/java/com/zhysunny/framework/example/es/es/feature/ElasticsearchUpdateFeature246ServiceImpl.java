@@ -9,6 +9,7 @@ import org.elasticsearch.lopq.LOPQModel;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.List;
+import java.util.Random;
 import static java.util.stream.Collectors.*;
 
 /**
@@ -16,9 +17,11 @@ import static java.util.stream.Collectors.*;
  * @author 章云
  * @date 2019/12/30 11:28
  */
-public class ElasticsearchWriteFeature246ServiceImpl extends ElasticsearchService<String> {
+public class ElasticsearchUpdateFeature246ServiceImpl extends ElasticsearchService<String> {
 
-    public ElasticsearchWriteFeature246ServiceImpl(String index, String type) {
+    private Random random = new Random();
+
+    public ElasticsearchUpdateFeature246ServiceImpl(String index, String type) {
         super(index, type);
         try {
             LOPQModel.loadProto(Thread.currentThread().getContextClassLoader().getResourceAsStream("model/modelserial.dat"));
@@ -27,7 +30,7 @@ public class ElasticsearchWriteFeature246ServiceImpl extends ElasticsearchServic
         }
     }
 
-    public ElasticsearchWriteFeature246ServiceImpl() {
+    public ElasticsearchUpdateFeature246ServiceImpl() {
         this(null, null);
     }
 
@@ -39,11 +42,10 @@ public class ElasticsearchWriteFeature246ServiceImpl extends ElasticsearchServic
         // 字符串变为json
         .map(str -> {
             JSONObject json = new JSONObject();
-            byte[] decode = Base64.getDecoder().decode(str);
-            json.put("rt_feature", decode);
             int[] predict = LOPQModel.predict(str);
             json.put("coarse_id", predict[0]);
             json.put("docid", str.substring(0, 32));
+            json.put("update", random.nextInt(10));
             return json;
         }).collect(toList());
     }
@@ -53,11 +55,11 @@ public class ElasticsearchWriteFeature246ServiceImpl extends ElasticsearchServic
         BulkRequestBuilder bulkRequest = client.prepareBulk();
         datas.forEach(json -> {
             StringBuilder index = new StringBuilder(this.index);
-            String coarseId = json.getString("coarse_id");
+            String coarseId = json.remove("coarse_id").toString();
             String docid = json.remove("docid").toString();
             index.append('-').append(coarseId);
             // 数据新增请求
-            bulkRequest.add(client.prepareIndex(index.toString(), this.type, docid).setSource(json));
+            bulkRequest.add(client.prepareUpdate(index.toString(), this.type, docid).setDoc(json));
         });
         return bulkRequest;
     }

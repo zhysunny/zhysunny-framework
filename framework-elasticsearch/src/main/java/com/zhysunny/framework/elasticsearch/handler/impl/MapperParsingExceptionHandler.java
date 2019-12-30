@@ -5,12 +5,8 @@ import com.zhysunny.framework.common.util.DateUtils;
 import com.zhysunny.framework.common.util.FileUtils;
 import com.zhysunny.framework.elasticsearch.EsExceptionType;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * mapper_parsing_exception异常处理
@@ -18,8 +14,6 @@ import java.io.IOException;
  * @date 2019/12/5 14:43
  */
 public class MapperParsingExceptionHandler extends FailuresHandler {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapperParsingExceptionHandler.class);
 
     private FileOutputStream fos;
 

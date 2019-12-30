@@ -2,8 +2,8 @@ package com.zhysunny.framework.elasticsearch.thread;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.input.Input;
+import com.zhysunny.framework.elasticsearch.ElasticsearchService;
 import com.zhysunny.framework.elasticsearch.util.EsClientPoolUtils;
-import com.zhysunny.framework.elasticsearch.write.ElasticsearchWriteService;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
@@ -19,10 +19,10 @@ public class ElasticsearchWriteThread extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchWriteThread.class);
 
-    private ElasticsearchWriteService esWriteService;
+    private ElasticsearchService esWriteService;
     private Input input;
 
-    public ElasticsearchWriteThread(String name, ElasticsearchWriteService esWriteService, Input input) {
+    public ElasticsearchWriteThread(String name, ElasticsearchService esWriteService, Input input) {
         this.setName(name);
         this.esWriteService = esWriteService;
         this.input = input;

@@ -10,7 +10,11 @@ public enum EsExceptionType {
     /**
      * 一般是字段类型导致的异常
      */
-    MAPPER_PARSING_EXCEPTION("mapper_parsing_exception");
+    MAPPER_PARSING_EXCEPTION("mapper_parsing_exception"),
+    /**
+     * 更新删除必须指定具体的索引名，不能使用通配符
+     */
+    INVALID_INDEX_NAME_EXCEPTION("invalid_index_name_exception");
 
     private String value;
 

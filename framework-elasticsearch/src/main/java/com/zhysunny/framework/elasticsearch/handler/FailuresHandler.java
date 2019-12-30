@@ -61,18 +61,19 @@ public abstract class FailuresHandler {
             if (bulkItemResponse.isFailed()) {
                 BulkItemResponse.Failure failure = bulkItemResponse.getFailure();
                 error++;
-                LOGGER.error("{}入库异常：{}", Thread.currentThread().getName(), failure.toString());
+                LOGGER.error("{}请求异常：{}", Thread.currentThread().getName(), failure.toString());
                 JSONObject json = JSON.parseObject(failure.toString());
                 JSONObject cause = json.getJSONObject("cause");
                 String type = cause.getString("type");
                 FailuresHandler failuresHandler = instances.get(type);
                 if (failuresHandler == null) {
-                    LOGGER.error("ES入库未知异常：{}", type);
+                    LOGGER.error("ES请求未知异常：{}", type);
+                    System.exit(1);
                 } else {
                     try {
                         failuresHandler.handler(json);
                     } catch (Exception e) {
-                        LOGGER.error("入库异常处理失败：{}", type);
+                        LOGGER.error("请求异常处理失败：{}", type);
                     }
                 }
             }
