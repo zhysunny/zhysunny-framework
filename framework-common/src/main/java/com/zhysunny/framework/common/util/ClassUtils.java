@@ -18,7 +18,7 @@ import java.util.jar.JarFile;
  */
 public class ClassUtils {
 
-    public static List<Class<?>> getClasses(String packageName) throws IOException {
+    public static List<Class<?>> getClasses(String packageName) {
         List<Class<?>> classes = new ArrayList<Class<?>>();
         URL url = ClassUtils.class.getClassLoader().getResource(packageName.replace(".", "/"));
         String protocol = url.getProtocol();
@@ -101,13 +101,9 @@ public class ClassUtils {
 
     public static void main(String[] args) {
         String packageName = ClassUtils.class.getPackage().getName();
-        try {
-            List<Class<?>> classes = getClasses(packageName);
-            for (Class<?> cls : classes) {
-                System.out.println(cls.getSimpleName());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
+        List<Class<?>> classes = getClasses(packageName);
+        for (Class<?> cls : classes) {
+            System.out.println(cls.getSimpleName());
         }
     }
 

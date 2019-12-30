@@ -13,5 +13,33 @@
     <name>Zhysunny Framework: Elasticsearch</name>
     <description>Elasticsearch业务操作基本框架</description>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>framework-common</artifactId>
+        </dependency>
+        <!-- elasticsearch start -->
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>transport</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch</groupId>
+            <artifactId>elasticsearch</artifactId>
+            <version>${elasticsearch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${elasticsearch.log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${elasticsearch.log4j.version}</version>
+        </dependency>
+        <!-- elasticsearch end -->
+    </dependencies>
 
 </project>

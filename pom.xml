@@ -30,6 +30,8 @@
         <compiler.encoding>UTF-8</compiler.encoding>
         <argLine>-Dfile.encoding=UTF-8</argLine>
         <kafka.version>0.9.0.1</kafka.version>
+        <elasticsearch.version>5.4.0</elasticsearch.version>
+        <elasticsearch.log4j.version>2.7</elasticsearch.log4j.version>
     </properties>
 
     <dependencyManagement>

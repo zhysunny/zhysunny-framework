@@ -15,7 +15,7 @@ import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
  * @author 章云
  * @date 2019/12/27 16:24
  */
-public class MessageConsumer {
+public class MessageConsumerMain {
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
