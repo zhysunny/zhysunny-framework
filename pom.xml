@@ -20,6 +20,7 @@
         <module>framework-package</module>
         <module>framework-kafka</module>
         <module>framework-example</module>
+        <module>framework-elasticsearch</module>
     </modules>
 
     <name>Zhysunny Framework</name>
@@ -47,6 +48,16 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>framework-kafka</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>framework-elasticsearch</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>framework-example</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <!-- module end -->

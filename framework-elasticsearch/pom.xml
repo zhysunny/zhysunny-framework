@@ -9,15 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>framework-example</artifactId>
-    <name>Zhysunny Framework: Example</name>
-    <description>框架使用样例</description>
+    <artifactId>framework-elasticsearch</artifactId>
+    <name>Zhysunny Framework: Elasticsearch</name>
+    <description>Elasticsearch业务操作基本框架</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>framework-kafka</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>
