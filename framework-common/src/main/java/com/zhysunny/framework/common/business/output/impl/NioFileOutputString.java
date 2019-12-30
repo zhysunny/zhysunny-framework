@@ -1,7 +1,7 @@
-package com.zhysunny.framework.kafka.business.output.impl;
+package com.zhysunny.framework.common.business.output.impl;
 
+import com.zhysunny.framework.common.business.output.FileOutput;
 import com.zhysunny.framework.common.file.NioFileReadWrite;
-import com.zhysunny.framework.kafka.business.output.FileOutput;
 import java.io.File;
 
 /**

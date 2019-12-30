@@ -1,4 +1,4 @@
-package com.zhysunny.framework.kafka.business.output;
+package com.zhysunny.framework.common.business.output;
 
 import java.io.IOException;
 import java.util.List;

@@ -1,10 +1,9 @@
-package com.zhysunny.framework.kafka.main;
+package com.zhysunny.framework.example.kafka.kafka.message;
 
+import com.zhysunny.framework.common.business.input.Input;
+import com.zhysunny.framework.common.business.input.impl.RandomString;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.kafka.business.input.Input;
-import com.zhysunny.framework.kafka.business.input.impl.RandomString;
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
-import com.zhysunny.framework.kafka.business.producer.KafkaProducerMessageServiceImpl;
 import com.zhysunny.framework.kafka.thread.KafkaProducerThread;
 import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
 

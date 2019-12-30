@@ -1,7 +1,7 @@
 package com.zhysunny.framework.kafka.consumer.service;
 
+import com.zhysunny.framework.common.business.output.Output;
 import com.zhysunny.framework.common.util.FileUtils;
-import com.zhysunny.framework.kafka.business.output.Output;
 import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

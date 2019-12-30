@@ -19,6 +19,7 @@
         <module>framework-springboot</module>
         <module>framework-package</module>
         <module>framework-kafka</module>
+        <module>framework-example</module>
     </modules>
 
     <name>Zhysunny Framework</name>

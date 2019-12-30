@@ -1,6 +1,6 @@
-package com.zhysunny.framework.kafka.business.output.impl;
+package com.zhysunny.framework.common.business.output.impl;
 
-import com.zhysunny.framework.kafka.business.output.Output;
+import com.zhysunny.framework.common.business.output.Output;
 import java.util.List;
 
 /**

@@ -1,8 +1,8 @@
-package com.zhysunny.framework.kafka.business.output.impl;
+package com.zhysunny.framework.common.business.output.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhysunny.framework.common.business.output.FileOutput;
 import com.zhysunny.framework.common.file.NioFileReadWriteJson;
-import com.zhysunny.framework.kafka.business.output.FileOutput;
 import java.io.File;
 
 /**

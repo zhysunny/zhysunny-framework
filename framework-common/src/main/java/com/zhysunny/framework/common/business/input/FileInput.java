@@ -1,4 +1,4 @@
-package com.zhysunny.framework.kafka.business.input;
+package com.zhysunny.framework.common.business.input;
 
 import com.zhysunny.framework.common.file.FileReadWrite;
 import java.io.File;

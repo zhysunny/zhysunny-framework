@@ -1,10 +1,8 @@
-package com.zhysunny.framework.kafka.main;
+package com.zhysunny.framework.example.kafka.kafka.message;
 
+import com.zhysunny.framework.common.business.output.Output;
+import com.zhysunny.framework.common.business.output.impl.ConsoleOutput;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.kafka.business.consumer.KafkaConsumerMessageServiceImpl;
-import com.zhysunny.framework.kafka.business.output.FileOutput;
-import com.zhysunny.framework.kafka.business.output.Output;
-import com.zhysunny.framework.kafka.business.output.impl.ConsoleOutput;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.persist.impl.NioFilePersistString;
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;

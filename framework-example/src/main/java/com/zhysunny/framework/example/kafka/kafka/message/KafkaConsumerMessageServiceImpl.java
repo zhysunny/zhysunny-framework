@@ -1,4 +1,4 @@
-package com.zhysunny.framework.kafka.business.consumer;
+package com.zhysunny.framework.example.kafka.kafka.message;
 
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
 import org.apache.kafka.clients.consumer.KafkaConsumer;

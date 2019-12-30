@@ -1,10 +1,9 @@
-package com.zhysunny.framework.kafka.business.input.impl;
+package com.zhysunny.framework.common.business.input.impl;
 
+import com.zhysunny.framework.common.business.input.Input;
 import com.zhysunny.framework.common.util.RandomUtils;
-import com.zhysunny.framework.kafka.business.input.Input;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 随机字符串

@@ -1,8 +1,8 @@
 package com.zhysunny.framework.kafka.business.input.impl;
 
 import static org.junit.Assert.*;
-import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.kafka.business.input.Input;
+import com.zhysunny.framework.common.business.input.Input;
+import com.zhysunny.framework.common.business.input.impl.RandomString;
 import org.junit.*;
 import java.util.List;
 

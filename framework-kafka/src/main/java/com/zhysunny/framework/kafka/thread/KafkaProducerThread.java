@@ -1,6 +1,6 @@
 package com.zhysunny.framework.kafka.thread;
 
-import com.zhysunny.framework.kafka.business.input.Input;
+import com.zhysunny.framework.common.business.input.Input;
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,8 +30,9 @@ public class KafkaProducerThread extends Thread {
             LOGGER.info("############# {}启动生产者线程 #############", this.getName());
             List<?> datas = input.input();
             kafkaProducerService.send(datas);
+            LOGGER.info("############# {}生产者线程结束 #############", this.getName());
         } catch (Throwable e) {
-            LOGGER.error("{} kafka消费线程异常退出", this.getName(), e);
+            LOGGER.error("{} kafka生产线程异常退出", this.getName(), e);
         }
     }
 

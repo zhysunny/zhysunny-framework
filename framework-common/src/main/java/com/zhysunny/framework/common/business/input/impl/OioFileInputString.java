@@ -1,14 +1,8 @@
-package com.zhysunny.framework.kafka.business.input.impl;
+package com.zhysunny.framework.common.business.input.impl;
 
+import com.zhysunny.framework.common.business.input.FileInput;
 import com.zhysunny.framework.common.file.OioFileReadWrite;
-import com.zhysunny.framework.kafka.business.input.FileInput;
-import com.zhysunny.framework.kafka.business.input.Input;
-import com.zhysunny.framework.kafka.business.output.impl.NioFileOutputString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.File;
 
 /**
  * 读取文件
