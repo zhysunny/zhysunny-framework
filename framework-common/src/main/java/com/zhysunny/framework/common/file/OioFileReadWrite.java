@@ -42,8 +42,8 @@ public class OioFileReadWrite implements FileReadWrite<String> {
     }
 
     @Override
-    public void write(List<String> datas) throws IOException {
-        try (final FileOutputStream fos = new FileOutputStream(file);) {
+    public void write(List<String> datas, boolean append) throws IOException {
+        try (final FileOutputStream fos = new FileOutputStream(file, append);) {
             for (String data : datas) {
                 fos.write((data + "\n").getBytes());
             }
@@ -51,4 +51,5 @@ public class OioFileReadWrite implements FileReadWrite<String> {
             throw e;
         }
     }
+
 }

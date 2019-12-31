@@ -17,9 +17,20 @@ public interface FileReadWrite<E> {
     List<E> read() throws IOException;
 
     /**
-     * 文件写
+     * 文件写，默认不追加
      * @param datas
+     * @throws IOException
      */
-    void write(List<E> datas) throws IOException;
+    default void write(List<E> datas) throws IOException {
+        write(datas, false);
+    }
+
+    /**
+     * 是否追加写
+     * @param datas
+     * @param append
+     * @throws IOException
+     */
+    void write(List<E> datas, boolean append) throws IOException;
 
 }

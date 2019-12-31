@@ -3,7 +3,9 @@ package com.zhysunny.framework.common.file;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.*;
@@ -40,11 +42,18 @@ public class NioFileReadWrite implements FileReadWrite<String> {
     }
 
     @Override
-    public void write(List<String> datas) throws IOException {
+    public void write(List<String> datas, boolean append) throws IOException {
+        OpenOption option;
+        if (append) {
+            option = StandardOpenOption.APPEND;
+        } else {
+            option = StandardOpenOption.WRITE;
+        }
         try {
-            Files.write(Paths.get(file.getAbsolutePath()), datas.stream().collect(toList()));
+            Files.write(Paths.get(file.getAbsolutePath()), datas.stream().collect(toList()), option);
         } catch (IOException e) {
             throw e;
         }
     }
+
 }

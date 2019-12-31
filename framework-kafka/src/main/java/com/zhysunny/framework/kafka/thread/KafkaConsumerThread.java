@@ -21,15 +21,15 @@ public class KafkaConsumerThread extends Thread {
     private Output[] outputs;
     private Persist persist;
 
-    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output[] outputs, Persist persist) {
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Persist persist, Output... outputs) {
         this.setName(name);
         this.kafkaConsumerService = kafkaConsumerService;
         this.outputs = outputs;
         this.persist = persist;
     }
 
-    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output[] outputs) {
-        this(name, kafkaConsumerService, outputs, null);
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output... outputs) {
+        this(name, kafkaConsumerService, null, outputs);
         this.setName(name);
     }
 

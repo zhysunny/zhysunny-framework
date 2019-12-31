@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.OpenOption;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import static java.util.stream.Collectors.*;
@@ -42,11 +44,18 @@ public class NioFileReadWriteJson implements FileReadWrite<JSONObject> {
     }
 
     @Override
-    public void write(List<JSONObject> datas) throws IOException {
+    public void write(List<JSONObject> datas, boolean append) throws IOException {
+        OpenOption option;
+        if (append) {
+            option = StandardOpenOption.APPEND;
+        } else {
+            option = StandardOpenOption.WRITE;
+        }
         try {
-            Files.write(Paths.get(file.getAbsolutePath()), datas.stream().map(json -> json.toJSONString()).collect(toList()));
+            Files.write(Paths.get(file.getAbsolutePath()), datas.stream().map(json -> json.toJSONString()).collect(toList()), option);
         } catch (IOException e) {
             throw e;
         }
     }
+
 }

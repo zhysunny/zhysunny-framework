@@ -25,7 +25,7 @@ public abstract class FileOutput<E> implements Output<E> {
 
     @Override
     public final void output(List<E> datas) throws IOException {
-        fileReadWrite.write(datas);
+        fileReadWrite.write(datas, true);
     }
 
 }

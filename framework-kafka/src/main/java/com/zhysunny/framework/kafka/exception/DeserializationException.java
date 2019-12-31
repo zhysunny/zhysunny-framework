@@ -1,4 +1,4 @@
-package com.zhysunny.framework.kafka.error;
+package com.zhysunny.framework.kafka.exception;
 
 import org.apache.kafka.common.KafkaException;
 

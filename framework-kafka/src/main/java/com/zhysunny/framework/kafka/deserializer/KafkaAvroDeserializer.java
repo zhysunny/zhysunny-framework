@@ -2,7 +2,7 @@ package com.zhysunny.framework.kafka.deserializer;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.kafka.ZnvSchema;
-import com.zhysunny.framework.kafka.error.DeserializationException;
+import com.zhysunny.framework.kafka.exception.DeserializationException;
 import org.apache.avro.Schema;
 import org.apache.avro.io.BinaryDecoder;
 import org.apache.avro.io.DecoderFactory;

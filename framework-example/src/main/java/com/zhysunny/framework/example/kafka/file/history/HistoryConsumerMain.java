@@ -1,7 +1,9 @@
-package com.zhysunny.framework.example.kafka.kafka.message;
+package com.zhysunny.framework.example.kafka.file.history;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.output.Output;
 import com.zhysunny.framework.common.business.output.impl.ConsoleOutput;
+import com.zhysunny.framework.common.business.output.impl.NioFileOutputJson;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.persist.impl.NioFilePersistString;
@@ -15,18 +17,18 @@ import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
  * @author 章云
  * @date 2019/12/27 16:24
  */
-public class MessageConsumerMain {
+public class HistoryConsumerMain {
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
         new HeartbeatThread(10000).start();
-        int threadNum = 3;
-        String name = "message";
-        Output[] outputs = new Output[]{ new ConsoleOutput() };
+        int threadNum = 10;
+        String name = "history";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
-            KafkaConsumerService<String, String> kafkaConsumerService = new KafkaConsumerMessageServiceImpl();
+            KafkaConsumerService<String, JSONObject> kafkaConsumerService = new KafkaConsumerHistoryServiceImpl();
             Persist<String> persist = new NioFilePersistString(name + i);
+            Output outputs = new NioFileOutputJson("history" + i + ".txt");
             threadPools.addThread(new KafkaConsumerThread(name + i, kafkaConsumerService, persist, outputs));
         }
         threadPools.shutdown();
