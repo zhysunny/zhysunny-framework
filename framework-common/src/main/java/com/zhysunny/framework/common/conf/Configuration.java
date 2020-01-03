@@ -1,9 +1,11 @@
 package com.zhysunny.framework.common.conf;
 
 import com.zhysunny.framework.common.properties.PropertiesReader;
+import com.zhysunny.framework.common.util.UnitUtils;
 import com.zhysunny.framework.common.xml.XmlReader;
 import com.zhysunny.framework.common.xml.XmlToProperties;
 import java.io.File;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.*;
@@ -53,6 +55,11 @@ public class Configuration {
         return this;
     }
 
+    public Configuration addDefaultResource(InputStream is) {
+        addResource(defaultResources, is);
+        return this;
+    }
+
     public Configuration addFinalResource(String name) {
         addResource(finalResources, name);
         return this;
@@ -65,6 +72,11 @@ public class Configuration {
 
     public Configuration addFinalResource(URL url) {
         addResource(finalResources, url);
+        return this;
+    }
+
+    public Configuration addFinalResource(InputStream is) {
+        addResource(finalResources, is);
         return this;
     }
 
@@ -122,6 +134,17 @@ public class Configuration {
     public Object get(String name, Object defaultValue) {
         Object value = get(name);
         return value == null ? defaultValue : value;
+    }
+
+    /************************* Capacity *******************/
+
+    public long getCapacity(String name, String defaultValue) {
+        String value = getString(name, defaultValue);
+        return UnitUtils.getCapacity(value).longValue();
+    }
+
+    public long getCapacity(String name) {
+        return getCapacity(name, "0");
     }
 
     /************************* String *******************/
