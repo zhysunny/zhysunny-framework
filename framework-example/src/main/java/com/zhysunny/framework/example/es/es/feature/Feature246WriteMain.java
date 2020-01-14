@@ -1,12 +1,12 @@
 package com.zhysunny.framework.example.es.es.feature;
 
-import com.zhysunny.framework.common.business.input.Input;
-import com.zhysunny.framework.common.business.input.impl.NioFileInputString;
+import com.zhysunny.framework.common.business.Transfer;
+import com.zhysunny.framework.common.business.impl.NioTransferString;
 import com.zhysunny.framework.common.conf.Configuration;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.elasticsearch.ElasticsearchService;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
-import com.zhysunny.framework.elasticsearch.thread.ElasticsearchWriteThread;
+import com.zhysunny.framework.elasticsearch.thread.ElasticsearchBulkThread;
 import com.zhysunny.framework.elasticsearch.thread.ShutdownHookThread;
 import com.zhysunny.framework.elasticsearch.util.EsClientPoolUtils;
 import java.io.File;
@@ -21,19 +21,19 @@ public class Feature246WriteMain {
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
         Configuration instance = Configuration.getInstance();
-        instance.addDefaultResource(Thread.currentThread().getContextClassLoader().getResource("conf/elasticsearch.properties"));
+        instance.addDefaultResource(Thread.currentThread().getContextClassLoader().getResource("conf/es/elasticsearch.properties"));
         int threadNum = 5;
         String name = "246feature";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         EsClientPoolUtils.init(EsConstants.ES_CLUSTER_NAME, EsConstants.ES_SERVER_HOSTS, threadNum);
-        ElasticsearchService esWriteService = new ElasticsearchWriteFeature246ServiceImpl(
-        EsConstants.ES_HISTORY_INDEX_NAME, EsConstants.ES_HISTORY_INDEX_TYPE);
+        ElasticsearchService esService = new ElasticsearchWriteFeature246ServiceImpl(EsConstants.ES_HISTORY_INDEX_NAME,
+        EsConstants.ES_HISTORY_INDEX_TYPE);
         File path = new File("E:\\feature\\feature246");
         File[] files = path.listFiles();
         int num = 0;
         for (File file : files) {
-            Input<String> input = new NioFileInputString(file);
-            threadPools.addThread(new ElasticsearchWriteThread(name + num++, esWriteService, input));
+            Transfer<String> transfer = new NioTransferString(file);
+            threadPools.addThread(new ElasticsearchBulkThread(name + num++, esService, transfer));
             if (num >= 5) {
                 break;
             }

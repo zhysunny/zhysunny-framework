@@ -1,7 +1,7 @@
 package com.zhysunny.framework.example.kafka.kafka.message;
 
-import com.zhysunny.framework.common.business.input.Input;
-import com.zhysunny.framework.common.business.input.impl.RandomString;
+import com.zhysunny.framework.common.business.Transfer;
+import com.zhysunny.framework.common.business.impl.RandomStringInput;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
 import com.zhysunny.framework.kafka.thread.KafkaProducerThread;
@@ -20,9 +20,9 @@ public class MessageProducerMain {
         String name = "message";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         KafkaProducerService<String, String> kafkaProducerService = new KafkaProducerMessageServiceImpl();
-        Input<String> input = new RandomString(1000, 1024);
+        Transfer<String> transfer = new RandomStringInput(1000, 1024);
         for (int i = 0; i < threadNum; i++) {
-            threadPools.addThread(new KafkaProducerThread(name + i, kafkaProducerService, input));
+            threadPools.addThread(new KafkaProducerThread(name + i, kafkaProducerService, transfer));
         }
         threadPools.shutdown();
     }

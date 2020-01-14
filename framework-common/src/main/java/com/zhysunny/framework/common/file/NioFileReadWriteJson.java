@@ -51,6 +51,9 @@ public class NioFileReadWriteJson implements FileReadWrite<JSONObject> {
         } else {
             option = StandardOpenOption.WRITE;
         }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         try {
             Files.write(Paths.get(file.getAbsolutePath()), datas.stream().map(json -> json.toJSONString()).collect(toList()), option);
         } catch (IOException e) {

@@ -1,9 +1,8 @@
 package com.zhysunny.framework.example.kafka.file.history;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.common.business.output.Output;
-import com.zhysunny.framework.common.business.output.impl.ConsoleOutput;
-import com.zhysunny.framework.common.business.output.impl.NioFileOutputJson;
+import com.zhysunny.framework.common.business.OutputManage;
+import com.zhysunny.framework.common.business.impl.NioTransferJson;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.persist.impl.NioFilePersistString;
@@ -27,9 +26,10 @@ public class HistoryConsumerMain {
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService<String, JSONObject> kafkaConsumerService = new KafkaConsumerHistoryServiceImpl();
+            kafkaConsumerService.setCommit(false);
             Persist<String> persist = new NioFilePersistString(name + i);
-            Output outputs = new NioFileOutputJson("history" + i + ".txt");
-            threadPools.addThread(new KafkaConsumerThread(name + i, kafkaConsumerService, persist, outputs));
+            OutputManage<String> output = new OutputManage<>(new NioTransferJson("history" + i + ".txt"));
+            threadPools.addThread(new KafkaConsumerThread(name + i, kafkaConsumerService, persist, output));
         }
         threadPools.shutdown();
     }

@@ -1,7 +1,7 @@
 package com.zhysunny.framework.example.kafka.kafka.message;
 
-import com.zhysunny.framework.common.business.output.Output;
-import com.zhysunny.framework.common.business.output.impl.ConsoleOutput;
+import com.zhysunny.framework.common.business.OutputManage;
+import com.zhysunny.framework.common.business.impl.ConsoleOutput;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.persist.impl.NioFilePersistString;
@@ -22,12 +22,13 @@ public class MessageConsumerMain {
         new HeartbeatThread(10000).start();
         int threadNum = 3;
         String name = "message";
-        Output[] outputs = new Output[]{ new ConsoleOutput() };
+        OutputManage<String> output = new OutputManage<>(new ConsoleOutput());
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService<String, String> kafkaConsumerService = new KafkaConsumerMessageServiceImpl();
+            kafkaConsumerService.setCommit(false);
             Persist<String> persist = new NioFilePersistString(name + i);
-            threadPools.addThread(new KafkaConsumerThread(name + i, kafkaConsumerService, persist, outputs));
+            threadPools.addThread(new KafkaConsumerThread(name + i, kafkaConsumerService, persist, output));
         }
         threadPools.shutdown();
     }

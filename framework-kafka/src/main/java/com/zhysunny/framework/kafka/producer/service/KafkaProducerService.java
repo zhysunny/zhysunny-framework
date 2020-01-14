@@ -1,14 +1,11 @@
 package com.zhysunny.framework.kafka.producer.service;
 
-import com.zhysunny.framework.common.util.FileUtils;
+import com.zhysunny.framework.kafka.KafkaService;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -16,31 +13,21 @@ import java.util.concurrent.ExecutionException;
  * @author 章云
  * @date 2019/9/19 15:10
  */
-public abstract class KafkaProducerService<K, V> {
+public abstract class KafkaProducerService<K, V> implements KafkaService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducerService.class);
-    private static final ClassLoader CLASS_LOADER = Thread.currentThread().getContextClassLoader();
     protected KafkaProducer<K, V> producer;
     protected String name;
-    protected Properties props;
     protected String topic;
-
-    public KafkaProducer getProducer() {
-        return producer;
-    }
 
     public String getName() {
         return name;
     }
 
     /**
-     * 创建生产者
+     * 创建消费者
      */
-    protected void createProducer(String resource) {
-        loadConfig(resource);
-        producer = new KafkaProducer<>(props);
-        topic = props.getProperty("topic.name");
-    }
+    public abstract void createProducer();
 
     /**
      * 发送数据到kafka
@@ -62,22 +49,6 @@ public abstract class KafkaProducerService<K, V> {
      */
     public final void close() {
         producer.close();
-    }
-
-    /**
-     * 读取配置
-     * @param resource
-     */
-    protected final void loadConfig(String resource) {
-        props = new Properties();
-        InputStream is = null;
-        try {
-            is = CLASS_LOADER.getResourceAsStream(resource);
-            props.load(is);
-        } catch (IOException e) {
-        } finally {
-            FileUtils.close(is);
-        }
     }
 
 }

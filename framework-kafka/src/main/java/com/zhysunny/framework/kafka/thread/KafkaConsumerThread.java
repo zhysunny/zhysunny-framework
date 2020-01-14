@@ -1,7 +1,7 @@
 package com.zhysunny.framework.kafka.thread;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.common.business.output.Output;
+import com.zhysunny.framework.common.business.OutputManage;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
 import org.slf4j.Logger;
@@ -18,19 +18,18 @@ public class KafkaConsumerThread extends Thread {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerThread.class);
 
     private KafkaConsumerService kafkaConsumerService;
-    private Output[] outputs;
+    private OutputManage output;
     private Persist persist;
 
-    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Persist persist, Output... outputs) {
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Persist persist, OutputManage output) {
         this.setName(name);
         this.kafkaConsumerService = kafkaConsumerService;
-        this.outputs = outputs;
+        this.output = output;
         this.persist = persist;
     }
 
-    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, Output... outputs) {
-        this(name, kafkaConsumerService, null, outputs);
-        this.setName(name);
+    public KafkaConsumerThread(String name, KafkaConsumerService kafkaConsumerService, OutputManage output) {
+        this(name, kafkaConsumerService, null, output);
     }
 
     @Override
@@ -59,10 +58,9 @@ public class KafkaConsumerThread extends Thread {
                         persist.write(datas);
                     }
                     // 提交offset
-                    //                    kafkaConsumerService.commit();
+                    kafkaConsumerService.commit();
                 }
-                // 开始ES入库步骤
-                kafkaConsumerService.output(datas, outputs);
+                output.start(datas);
                 if (persist != null) {
                     // 持久化文件回滚，相当于删除持久化数据
                     persist.delete();

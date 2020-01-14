@@ -2,6 +2,7 @@ package com.zhysunny.framework.example.kafka.kafka.message;
 
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
 import org.apache.kafka.clients.producer.KafkaProducer;
+import java.util.Properties;
 
 /**
  * kafka生产者接口
@@ -12,7 +13,13 @@ public class KafkaProducerMessageServiceImpl extends KafkaProducerService<String
 
     public KafkaProducerMessageServiceImpl() {
         this.name = "message";
-        this.createProducer("conf/kafka.properties");
+    }
+
+    @Override
+    public void createProducer() {
+        Properties props = loadConfig("conf/kafka/kafka.properties");
+        producer = new KafkaProducer<>(props);
+        topic = props.getProperty("topic.name");
     }
 
 }

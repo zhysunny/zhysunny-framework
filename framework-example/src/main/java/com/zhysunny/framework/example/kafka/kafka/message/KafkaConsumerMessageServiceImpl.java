@@ -4,6 +4,7 @@ import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * kafka 消费者
@@ -18,7 +19,7 @@ public class KafkaConsumerMessageServiceImpl extends KafkaConsumerService<String
 
     @Override
     public void createConsumer() {
-        loadConfig("conf/kafka.properties");
+        Properties props = loadConfig("conf/kafka/kafka.properties");
         // 消费组
         consumer = new KafkaConsumer(props);
         // 绑定topic

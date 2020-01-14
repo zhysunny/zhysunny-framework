@@ -49,6 +49,9 @@ public class NioFileReadWrite implements FileReadWrite<String> {
         } else {
             option = StandardOpenOption.WRITE;
         }
+        if (!file.exists()) {
+            file.createNewFile();
+        }
         try {
             Files.write(Paths.get(file.getAbsolutePath()), datas.stream().collect(toList()), option);
         } catch (IOException e) {
