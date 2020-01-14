@@ -2,13 +2,14 @@ package com.zhysunny.framework.elasticsearch.thread;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Transfer;
-import com.zhysunny.framework.elasticsearch.ElasticsearchService;
+import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
 import com.zhysunny.framework.elasticsearch.util.EsClientPoolUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
+import java.util.Map;
 
 /**
  * ES写线程
@@ -19,10 +20,10 @@ public class ElasticsearchBulkThread extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchBulkThread.class);
 
-    private ElasticsearchService esService;
+    private ElasticsearchBulkService esService;
     private Transfer transfer;
 
-    public ElasticsearchBulkThread(String name, ElasticsearchService esService, Transfer transfer) {
+    public ElasticsearchBulkThread(String name, ElasticsearchBulkService esService, Transfer transfer) {
         this.setName(name);
         this.esService = esService;
         this.transfer = transfer;
@@ -34,10 +35,10 @@ public class ElasticsearchBulkThread extends Thread {
             LOGGER.info("############# {}启动ES写线程 #############", this.getName());
             TransportClient client = EsClientPoolUtils.getClient();
             List<?> input = this.transfer.input();
-            List<JSONObject> conversion = esService.conversion(input);
-            List<JSONObject> filter = esService.filter(conversion);
-            BulkRequestBuilder bulkRequestBuilder = esService.buildBulkRequest(client, filter);
-            esService.request(bulkRequestBuilder);
+            Map<String, JSONObject> datas = esService.conversion(input);
+            datas = esService.filter(datas);
+            BulkRequestBuilder bulkRequestBuilder = esService.buildBulkRequest(client, datas);
+            esService.request(bulkRequestBuilder, datas);
             EsClientPoolUtils.close(client);
             LOGGER.info("############# {} ES写线程结束 #############", this.getName());
         } catch (Throwable e) {

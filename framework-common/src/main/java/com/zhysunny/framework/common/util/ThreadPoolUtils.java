@@ -13,11 +13,11 @@ public enum ThreadPoolUtils {
     /**
      * 一个线程池实例，生产环境只能怪，参数可以使用配置
      */
-    INSTANCE1("pool-1-", 20, 20),
+    KAFKA("kafka-pool-", 20, 20),
     /**
      * 线程池实例2
      */
-    INSTANCE2("pool-2-", 20, 20);
+    ES("es-pool-", 20, 20);
 
     /**
      * 核心线程数

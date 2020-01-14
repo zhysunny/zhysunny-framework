@@ -4,7 +4,7 @@ import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.business.impl.NioTransferString;
 import com.zhysunny.framework.common.conf.Configuration;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.elasticsearch.ElasticsearchService;
+import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
 import com.zhysunny.framework.elasticsearch.thread.ElasticsearchBulkThread;
 import com.zhysunny.framework.elasticsearch.thread.ShutdownHookThread;
@@ -26,7 +26,7 @@ public class Feature246DeleteMain {
         String name = "246feature";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         EsClientPoolUtils.init(EsConstants.ES_CLUSTER_NAME, EsConstants.ES_SERVER_HOSTS, threadNum);
-        ElasticsearchService esService = new ElasticsearchDeleteFeature246ServiceImpl(
+        ElasticsearchBulkService esService = new ElasticsearchDeleteFeature246ServiceImpl(
         EsConstants.ES_HISTORY_INDEX_NAME, EsConstants.ES_HISTORY_INDEX_TYPE);
         File path = new File("E:\\feature\\feature246");
         File[] files = path.listFiles();

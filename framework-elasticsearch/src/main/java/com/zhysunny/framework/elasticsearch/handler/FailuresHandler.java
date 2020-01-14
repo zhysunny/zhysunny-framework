@@ -10,7 +10,6 @@ import org.elasticsearch.action.bulk.BulkResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,14 +45,14 @@ public abstract class FailuresHandler {
      * @param failure ES入库异常错误信息
      * @throws Exception
      */
-    public abstract void handler(JSONObject failure) throws Exception;
+    public abstract void handler(JSONObject failure, Map<String, JSONObject> datas) throws Exception;
 
     /**
      * 异常处理
      * @param bulkResponse
      * @return
      */
-    public static int handler(BulkResponse bulkResponse) {
+    public static int handler(BulkResponse bulkResponse, Map<String, JSONObject> datas) {
         // 打印异常信息
         // 防止日志过多，第一次失败是打印详细日志
         int error = 0;
@@ -71,7 +70,7 @@ public abstract class FailuresHandler {
                     System.exit(1);
                 } else {
                     try {
-                        failuresHandler.handler(json);
+                        failuresHandler.handler(json, datas);
                     } catch (Exception e) {
                         LOGGER.error("请求异常处理失败：{}", type);
                     }

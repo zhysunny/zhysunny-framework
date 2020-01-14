@@ -1,23 +1,23 @@
 package com.zhysunny.framework.example.es.es.feature;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.elasticsearch.ElasticsearchService;
+import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.lopq.LOPQModel;
 import java.io.IOException;
-import java.util.Base64;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import static java.util.stream.Collectors.*;
+import java.util.stream.Collectors;
 
 /**
  * 246特征写入
  * @author 章云
  * @date 2019/12/30 11:28
  */
-public class ElasticsearchUpdateFeature246ServiceImpl extends ElasticsearchService<String> {
+public class ElasticsearchUpdateFeature246ServiceImpl extends ElasticsearchBulkService<String> {
 
     private Random random = new Random();
 
@@ -35,7 +35,7 @@ public class ElasticsearchUpdateFeature246ServiceImpl extends ElasticsearchServi
     }
 
     @Override
-    public List<JSONObject> conversion(List<String> datas) {
+    public Map<String, JSONObject> conversion(List<String> datas) {
         return datas.stream()
         // 数据为空的不用
         .filter(str -> StringUtils.isNotEmpty(str))
@@ -47,16 +47,19 @@ public class ElasticsearchUpdateFeature246ServiceImpl extends ElasticsearchServi
             json.put("docid", str.substring(0, 32));
             json.put("update", random.nextInt(10));
             return json;
-        }).collect(toList());
+        })
+        // 组装新的集合
+        .collect(Collectors.toMap(json -> (String)json.remove("docid"), json -> json, (existing, replacement) -> replacement));
     }
 
     @Override
-    public BulkRequestBuilder buildBulkRequest(TransportClient client, List<JSONObject> datas) {
+    public BulkRequestBuilder buildBulkRequest(TransportClient client, Map<String, JSONObject> datas) {
         BulkRequestBuilder bulkRequest = client.prepareBulk();
-        datas.forEach(json -> {
+        datas.entrySet().forEach(entry -> {
+            String docid = entry.getKey();
+            JSONObject json = entry.getValue();
             StringBuilder index = new StringBuilder(this.index);
             String coarseId = json.remove("coarse_id").toString();
-            String docid = json.remove("docid").toString();
             index.append('-').append(coarseId);
             // 数据新增请求
             bulkRequest.add(client.prepareUpdate(index.toString(), this.type, docid).setDoc(json));

@@ -7,6 +7,7 @@ import com.zhysunny.framework.elasticsearch.EsExceptionType;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.Map;
 
 /**
  * mapper_parsing_exception异常处理
@@ -22,7 +23,7 @@ public class MapperParsingExceptionHandler extends FailuresHandler {
     }
 
     @Override
-    public void handler(JSONObject failure) throws Exception {
+    public void handler(JSONObject failure, Map<String, JSONObject> datas) throws Exception {
         JSONObject cause = failure.getJSONObject("cause");
         JSONObject causedBy = cause.getJSONObject("caused_by");
         String type = causedBy.getString("type");

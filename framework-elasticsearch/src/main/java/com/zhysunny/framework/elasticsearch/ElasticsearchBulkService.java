@@ -13,16 +13,21 @@ import org.slf4j.LoggerFactory;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import static java.util.stream.Collectors.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * ES服务接口
  * @author 章云
  * @date 2019/12/30 10:35
  */
-public abstract class ElasticsearchService<E> {
+public abstract class ElasticsearchBulkService<E> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchService.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchBulkService.class);
+
+    /**
+     * 针对更新同一索引是加写锁
+     */
+    protected ReentrantReadWriteLock.WriteLock updateIndexLock;
 
     /**
      * 当所有数据操作同一个index和type是需要
@@ -30,12 +35,12 @@ public abstract class ElasticsearchService<E> {
     protected String index;
     protected String type;
 
-    public ElasticsearchService(String index, String type) {
+    public ElasticsearchBulkService(String index, String type) {
         this.index = index;
         this.type = type;
     }
 
-    public ElasticsearchService() {
+    public ElasticsearchBulkService() {
         // 不执行index和type，需要每个data中有index和type键值对
         this(null, null);
     }
@@ -45,7 +50,7 @@ public abstract class ElasticsearchService<E> {
      * @param datas
      * @return
      */
-    public abstract List<JSONObject> conversion(List<E> datas);
+    public abstract Map<String, JSONObject> conversion(List<E> datas);
 
     /**
      * 批量写请求封装
@@ -53,24 +58,24 @@ public abstract class ElasticsearchService<E> {
      * @param datas
      * @return
      */
-    public abstract BulkRequestBuilder buildBulkRequest(TransportClient client, List<JSONObject> datas);
+    public abstract BulkRequestBuilder buildBulkRequest(TransportClient client, Map<String, JSONObject> datas);
 
     /**
      * 过滤字段为空的值
      * @param datas
      * @return
      */
-    public final List<JSONObject> filter(List<JSONObject> datas) {
-        return datas.stream().map(json -> {
-            Iterator<Map.Entry<String, Object>> iterator = json.entrySet().iterator();
+    public final Map<String, JSONObject> filter(Map<String, JSONObject> datas) {
+        for (Map.Entry<String, JSONObject> entry : datas.entrySet()) {
+            Iterator<Map.Entry<String, Object>> iterator = entry.getValue().entrySet().iterator();
             while (iterator.hasNext()) {
-                Map.Entry<String, Object> entry = iterator.next();
-                if (StringUtils.isEmptyParamOne(entry.getValue())) {
+                Map.Entry<String, Object> json = iterator.next();
+                if (StringUtils.isEmptyParamOne(json.getValue())) {
                     iterator.remove();
                 }
             }
-            return json;
-        }).collect(toList());
+        }
+        return datas;
     }
 
     /**
@@ -78,10 +83,13 @@ public abstract class ElasticsearchService<E> {
      * @param bulkRequest
      * @return
      */
-    public final int request(BulkRequestBuilder bulkRequest) {
+    public final int request(BulkRequestBuilder bulkRequest, Map<String, JSONObject> datas) {
         int num = bulkRequest.numberOfActions();
         if (num > 0) {
             BulkResponse bulkResponse = null;
+            if (updateIndexLock != null) {
+                updateIndexLock.lock();
+            }
             try {
                 bulkResponse = bulkRequest.get();
             } catch (NoNodeAvailableException e) {
@@ -93,10 +101,14 @@ public abstract class ElasticsearchService<E> {
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
                 System.exit(1);
+            } finally {
+                if (updateIndexLock != null) {
+                    updateIndexLock.unlock();
+                }
             }
             int error = 0;
             if (bulkResponse.hasFailures()) {
-                error = FailuresHandler.handler(bulkResponse);
+                error = FailuresHandler.handler(bulkResponse, datas);
             }
             num = bulkResponse.getItems().length;
             if (num - error > 0) {

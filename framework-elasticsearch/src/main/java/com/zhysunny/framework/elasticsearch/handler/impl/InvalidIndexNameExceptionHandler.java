@@ -5,6 +5,7 @@ import com.zhysunny.framework.elasticsearch.EsExceptionType;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Map;
 
 /**
  * invalid_index_name_exception异常处理
@@ -20,7 +21,7 @@ public class InvalidIndexNameExceptionHandler extends FailuresHandler {
     }
 
     @Override
-    public void handler(JSONObject failure) throws Exception {
+    public void handler(JSONObject failure, Map<String, JSONObject> datas) throws Exception {
         LOGGER.error("更新删除不可以使用通配符索引名：" + failure.getString("index"));
         System.exit(1);
     }
