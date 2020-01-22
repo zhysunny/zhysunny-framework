@@ -29,7 +29,6 @@ public abstract class ElasticsearchBulkService<E> {
      */
     protected ReentrantReadWriteLock.WriteLock updateIndexLock;
 
-    protected List<E> datas;
     /**
      * 当所有数据操作同一个index和type是需要
      */
@@ -45,20 +44,6 @@ public abstract class ElasticsearchBulkService<E> {
         // 不执行index和type，需要每个data中有index和type键值对
         this(null, null);
     }
-
-    public List<E> getDatas() {
-        return datas;
-    }
-
-    public void setDatas(List<E> datas) {
-        this.datas = datas;
-    }
-
-    /**
-     * 数据字段转换
-     * @return
-     */
-    public Map<String, JSONObject> conversion() {return null;}
 
     /**
      * 批量写请求封装
@@ -84,6 +69,19 @@ public abstract class ElasticsearchBulkService<E> {
     public final Map<String, JSONObject> filter(Map<String, JSONObject> datas) {
         for (Map.Entry<String, JSONObject> entry : datas.entrySet()) {
             Iterator<Map.Entry<String, Object>> iterator = entry.getValue().entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<String, Object> json = iterator.next();
+                if (StringUtils.isEmptyParamOne(json.getValue())) {
+                    iterator.remove();
+                }
+            }
+        }
+        return datas;
+    }
+
+    public final List<JSONObject> filter(List<JSONObject> datas) {
+        for (JSONObject data : datas) {
+            Iterator<Map.Entry<String, Object>> iterator = data.entrySet().iterator();
             while (iterator.hasNext()) {
                 Map.Entry<String, Object> json = iterator.next();
                 if (StringUtils.isEmptyParamOne(json.getValue())) {

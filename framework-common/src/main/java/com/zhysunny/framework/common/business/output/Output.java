@@ -1,31 +1,25 @@
-package com.zhysunny.framework.common.file;
+package com.zhysunny.framework.common.business.output;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 /**
- * 文件读写
+ * 输出接口
  * @author 章云
- * @date 2019/12/27 20:48
+ * @date 2019/12/27 21:22
  */
-public interface FileReadWrite<E> {
+public interface Output<E> {
 
     /**
-     * 文件读
-     * @return
-     */
-    List<E> read() throws IOException;
-
-    /**
-     * 文件写
+     * 输出
      * @param datas
      * @throws IOException
      */
     void write(List<E> datas) throws IOException;
 
     /**
-     * 文件写
+     * 输出
      * @param datas
      * @throws IOException
      */

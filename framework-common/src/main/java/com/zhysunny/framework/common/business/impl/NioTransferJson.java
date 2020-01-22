@@ -2,7 +2,6 @@ package com.zhysunny.framework.common.business.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.FileTransfer;
-import com.zhysunny.framework.common.file.NioFileReadWriteJson;
 import java.io.File;
 
 /**

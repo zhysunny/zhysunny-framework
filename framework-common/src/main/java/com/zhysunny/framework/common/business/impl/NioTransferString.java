@@ -1,7 +1,6 @@
 package com.zhysunny.framework.common.business.impl;
 
 import com.zhysunny.framework.common.business.FileTransfer;
-import com.zhysunny.framework.common.file.NioFileReadWrite;
 import java.io.File;
 
 /**

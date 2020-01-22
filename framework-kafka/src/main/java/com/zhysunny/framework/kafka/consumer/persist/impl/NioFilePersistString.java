@@ -1,6 +1,5 @@
 package com.zhysunny.framework.kafka.consumer.persist.impl;
 
-import com.zhysunny.framework.common.file.NioFileReadWrite;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 
 /**

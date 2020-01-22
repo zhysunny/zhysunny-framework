@@ -1,7 +1,6 @@
 package com.zhysunny.framework.kafka.consumer.persist.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.common.file.NioFileReadWriteJson;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 
 /**
