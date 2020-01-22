@@ -34,7 +34,7 @@ public class EsClientUtils implements ClientPoolUtils.Client<TransportClient> {
             for (String host : transportHosts) {
                 host = host.replaceAll("http://", "");
                 String[] inet = host.split(":");
-                addresses[i++] = new InetSocketTransportAddress(InetAddress.getByName(inet[0]), EsConstants.ES_HTTP_IMPORT_PORT);
+                addresses[i++] = new InetSocketTransportAddress(InetAddress.getByName(inet[0]), EsConstants.ES_HTTP_IMPORT_PORT_VALUE);
             }
             client = new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
         } catch (Throwable e) {

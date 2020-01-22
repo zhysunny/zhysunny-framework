@@ -125,9 +125,9 @@ public class ElasticsearchBulkService<E> implements Output<E> {
                 bulkResponse = bulkRequest.get();
             } catch (NoNodeAvailableException e) {
                 LOGGER.error("cluster name:{},hosts:{},port:{}",
-                EsConstants.ES_CLUSTER_NAME,
-                EsConstants.ES_SERVER_HOSTS,
-                EsConstants.ES_HTTP_IMPORT_PORT);
+                EsConstants.ES_CLUSTER_NAME_VALUE,
+                EsConstants.ES_SERVER_HOSTS_VALUE,
+                EsConstants.ES_HTTP_IMPORT_PORT_VALUE);
                 System.exit(1);
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
