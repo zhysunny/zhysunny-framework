@@ -1,5 +1,7 @@
 package com.zhysunny.framework.elasticsearch.service;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zhysunny.framework.common.business.Input;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -8,12 +10,14 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author 章云
  * @date 2020/1/20 15:07
  */
-public class ElasticsearchScrollQueryService {
+public class ElasticsearchScrollQueryService implements Input<JSONObject> {
 
     protected SearchRequestBuilder builder;
     private TransportClient client;
@@ -49,6 +53,11 @@ public class ElasticsearchScrollQueryService {
             scroll(1);
             return hits;
         }
+        return null;
+    }
+
+    @Override
+    public List<JSONObject> input() throws IOException {
         return null;
     }
 

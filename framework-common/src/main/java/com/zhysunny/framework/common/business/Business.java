@@ -1,6 +1,7 @@
 package com.zhysunny.framework.common.business;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -9,11 +10,11 @@ import java.util.Map;
  */
 public interface Business<T> {
 
-    Collection<T> conversion(Collection<T> datas);
+    List<T> conversion(List<T> datas);
 
-    Map<String, T> conversionToMap(Collection<T> datas);
+    Map<String, T> conversionToMap(List<T> datas);
 
-    Collection<T> conversionToCollection(Map<String, T> datas);
+    List<T> conversionToList(Map<String, T> datas);
 
     Map<String, T> conversion(Map<String, T> datas);
 

@@ -1,7 +1,7 @@
 package com.zhysunny.framework.kafka.business.input.impl;
 
-import com.zhysunny.framework.common.business.Transfer;
-import com.zhysunny.framework.common.business.impl.RandomStringInput;
+import com.zhysunny.framework.common.business.Input;
+import com.zhysunny.framework.common.business.impl.RandomString;
 import org.junit.*;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -38,7 +38,7 @@ public class RandomStringTest {
     public void testInput() throws Exception {
         int total = 10;
         int size = 1024;
-        Transfer<String> input = new RandomStringInput(total, size);
+        Input<String> input = new RandomString(total, size);
         List<String> datas = input.input();
         assertEquals(datas.size(), total);
         datas.forEach(str -> assertEquals(str.length(), size));

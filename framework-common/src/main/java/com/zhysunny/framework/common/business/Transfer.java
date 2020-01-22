@@ -1,27 +1,37 @@
 package com.zhysunny.framework.common.business;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
- * 数据传输
  * @author 章云
- * @date 2020/1/14 10:11
+ * @date 2020/1/22 14:47
  */
-public interface Transfer<E> {
+public abstract class Transfer {
 
     /**
-     * 数据输入
+     * 输入
+     */
+    protected Input input;
+    /**
+     * 业务转换
+     */
+    protected Business business;
+    /**
+     * 输出
+     */
+    protected Output[] outputs;
+
+    public Transfer(Input input, Business business, Output... outputs) {
+        this.input = input;
+        this.business = business;
+        this.outputs = outputs;
+    }
+
+    /**
+     * 传输
      * @return
      * @throws IOException
      */
-    List<E> input() throws IOException;
-
-    /**
-     * 数据输出
-     * @param datas
-     * @throws IOException
-     */
-    void output(List<E> datas) throws IOException;
+    public abstract void transfer() throws IOException;
 
 }

@@ -1,6 +1,7 @@
 package com.zhysunny.framework.elasticsearch.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zhysunny.framework.common.business.Output;
 import com.zhysunny.framework.common.util.StringUtils;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
@@ -20,7 +21,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  * @author 章云
  * @date 2019/12/30 10:35
  */
-public abstract class ElasticsearchBulkService<E> {
+public class ElasticsearchBulkService<E> implements Output<E> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchBulkService.class);
 
@@ -34,32 +35,32 @@ public abstract class ElasticsearchBulkService<E> {
      */
     protected String index;
     protected String type;
+    protected TransportClient client;
 
-    public ElasticsearchBulkService(String index, String type) {
+    public ElasticsearchBulkService(TransportClient client, String index, String type) {
+        this.client = client;
         this.index = index;
         this.type = type;
     }
 
-    public ElasticsearchBulkService() {
+    public ElasticsearchBulkService(TransportClient client) {
         // 不执行index和type，需要每个data中有index和type键值对
-        this(null, null);
+        this(client, null, null);
     }
 
     /**
      * 批量写请求封装
-     * @param client
      * @param datas
      * @return
      */
-    public BulkRequestBuilder buildBulkRequest(TransportClient client, Map<String, JSONObject> datas) {return null;}
+    public BulkRequestBuilder buildBulkRequest(Map<String, JSONObject> datas) {return null;}
 
     /**
      * 批量写请求封装
-     * @param client
      * @param datas
      * @return
      */
-    public BulkRequestBuilder buildBulkRequest(TransportClient client, List<E> datas) {return null;}
+    public BulkRequestBuilder buildBulkRequest(List<E> datas) {return null;}
 
     /**
      * 过滤字段为空的值
@@ -79,6 +80,11 @@ public abstract class ElasticsearchBulkService<E> {
         return datas;
     }
 
+    /**
+     * 过滤字段为空的值
+     * @param datas
+     * @return
+     */
     public final List<JSONObject> filter(List<JSONObject> datas) {
         for (JSONObject data : datas) {
             Iterator<Map.Entry<String, Object>> iterator = data.entrySet().iterator();
@@ -95,9 +101,9 @@ public abstract class ElasticsearchBulkService<E> {
     /**
      * 入库请求批量发送
      * @param bulkRequest
-     * @return
+     * @return 返回[成功数, 失败数]
      */
-    public final int request(BulkRequestBuilder bulkRequest) {
+    public final int[] request(BulkRequestBuilder bulkRequest) {
         return request(bulkRequest, null);
     }
 
@@ -105,10 +111,11 @@ public abstract class ElasticsearchBulkService<E> {
      * 入库请求批量发送
      * @param bulkRequest 批量请求
      * @param datas       原始数据，用于异常处理
-     * @return
+     * @return 返回[成功数, 失败数]
      */
-    public final int request(BulkRequestBuilder bulkRequest, Map<String, JSONObject> datas) {
+    public final int[] request(BulkRequestBuilder bulkRequest, Map<String, JSONObject> datas) {
         int num = bulkRequest.numberOfActions();
+        int error = 0;
         if (num > 0) {
             BulkResponse bulkResponse = null;
             if (updateIndexLock != null) {
@@ -130,19 +137,21 @@ public abstract class ElasticsearchBulkService<E> {
                     updateIndexLock.unlock();
                 }
             }
-            int error = 0;
             if (bulkResponse.hasFailures()) {
                 error = FailuresHandler.handler(bulkResponse, datas);
             }
-            num = bulkResponse.getItems().length;
-            if (num - error > 0) {
-                LOGGER.info("{}请求成功记录数：{}", Thread.currentThread().getName(), num - error);
-            }
-            if (error > 0) {
-                LOGGER.info("{}请求异常记录数：{}", Thread.currentThread().getName(), error);
-            }
         }
-        return num;
+        return new int[]{ num - error, error };
+    }
+
+    @Override
+    public Object write(List<E> datas) {
+        return null;
+    }
+
+    @Override
+    public Object write(Map<String, E> datas) {
+        return null;
     }
 
 }

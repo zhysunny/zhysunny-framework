@@ -1,5 +1,6 @@
 package com.zhysunny.framework.common.thread;
 
+import com.zhysunny.framework.common.business.Heartbeat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.Arrays;
@@ -20,9 +21,9 @@ public class HeartbeatThread extends Thread {
     /**
      * 心跳任务
      */
-    private Hearbeat[] hearbeats;
+    private Heartbeat[] hearbeats;
 
-    public HeartbeatThread(long interval, Hearbeat... hearbeats) {
+    public HeartbeatThread(long interval, Heartbeat... hearbeats) {
         // 设置守护线程，当非守护线程线程全部结束时，该线程自动结束
         this.setDaemon(true);
         this.hearbeats = hearbeats;

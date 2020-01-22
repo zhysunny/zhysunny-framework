@@ -55,7 +55,7 @@ public class OioFileReadWriteJson implements FileReadWrite<JSONObject> {
     }
 
     @Override
-    public void write(List<JSONObject> datas) throws IOException {
+    public Object write(List<JSONObject> datas) throws IOException {
         try (final FileOutputStream fos = new FileOutputStream(file, append)) {
             for (JSONObject data : datas) {
                 fos.write((data.toJSONString() + "\n").getBytes());
@@ -63,10 +63,11 @@ public class OioFileReadWriteJson implements FileReadWrite<JSONObject> {
         } catch (IOException e) {
             throw e;
         }
+        return datas.size();
     }
 
     @Override
-    public void write(Map<String, JSONObject> datas) throws IOException {
+    public Object write(Map<String, JSONObject> datas) throws IOException {
         try (final FileOutputStream fos = new FileOutputStream(file, append)) {
             for (Map.Entry<String, JSONObject> entry : datas.entrySet()) {
                 fos.write((entry.getKey() + "\t" + entry.getValue().toJSONString() + "\n").getBytes());
@@ -74,6 +75,12 @@ public class OioFileReadWriteJson implements FileReadWrite<JSONObject> {
         } catch (IOException e) {
             throw e;
         }
+        return datas.size();
+    }
+
+    @Override
+    public File getFile() {
+        return this.file;
     }
 
 }
