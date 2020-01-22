@@ -2,10 +2,10 @@ package com.zhysunny.framework.example.kafka.kafka.message;
 
 import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.business.impl.RandomStringInput;
+import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.producer.service.KafkaProducerService;
 import com.zhysunny.framework.kafka.thread.KafkaProducerThread;
-import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
 
 /**
  * 生产者测试

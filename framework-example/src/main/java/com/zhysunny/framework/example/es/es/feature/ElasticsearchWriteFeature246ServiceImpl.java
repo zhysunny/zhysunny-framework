@@ -1,7 +1,7 @@
 package com.zhysunny.framework.example.es.es.feature;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
+import com.zhysunny.framework.elasticsearch.service.ElasticsearchBulkService;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;

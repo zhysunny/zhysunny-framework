@@ -1,5 +1,6 @@
 package com.zhysunny.framework.elasticsearch.util;
 
+import com.zhysunny.framework.common.util.ClientPoolUtils;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -13,9 +14,18 @@ import java.net.InetAddress;
  * @author 章云
  * @date 2019/7/16 14:23
  */
-public class EsClientUtils {
+public class EsClientUtils implements ClientPoolUtils.Client<TransportClient> {
 
-    public static TransportClient getEsTransportClient(String clusterName, String... transportHosts) {
+    private String clusterName;
+    private String[] transportHosts;
+
+    public EsClientUtils(String clusterName, String... transportHosts) {
+        this.clusterName = clusterName;
+        this.transportHosts = transportHosts;
+    }
+
+    @Override
+    public TransportClient getClient() {
         TransportClient client = null;
         try {
             Settings settings = Settings.builder().put("cluster.name", clusterName).build();
@@ -34,7 +44,8 @@ public class EsClientUtils {
     }
 
     public static void main(String[] args) {
-        getEsTransportClient("lv217.dct-znv.com-es", "10.45.154.217");
+        EsClientUtils clientUtils = new EsClientUtils("lv217.dct-znv.com-es", "10.45.154.217");
+        clientUtils.getClient();
     }
 
 }

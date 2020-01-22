@@ -1,4 +1,4 @@
-package com.zhysunny.framework.elasticsearch;
+package com.zhysunny.framework.elasticsearch.service;
 
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -11,7 +11,7 @@ import org.elasticsearch.search.sort.SortOrder;
  * @author 章云
  * @date 2020/1/14 15:13
  */
-public class ElasticsearchQueryService {
+public class ElasticsearchScrollQueryService {
 
     private TransportClient client;
     private String index;
@@ -19,7 +19,7 @@ public class ElasticsearchQueryService {
     private int batch = 1000;
     private String scrollId;
 
-    public ElasticsearchQueryService(TransportClient client, String index) {
+    public ElasticsearchScrollQueryService(TransportClient client, String index) {
         this.client = client;
         this.index = index;
     }

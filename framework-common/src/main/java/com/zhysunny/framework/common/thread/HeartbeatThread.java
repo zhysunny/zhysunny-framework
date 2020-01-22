@@ -1,8 +1,8 @@
-package com.zhysunny.framework.kafka.thread;
+package com.zhysunny.framework.common.thread;
 
-import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Arrays;
 
 /**
  * 心跳线程，用于检测程序运行状态
@@ -17,24 +17,31 @@ public class HeartbeatThread extends Thread {
      * 心跳时间，单位毫秒
      */
     private long interval;
+    /**
+     * 心跳任务
+     */
+    private Hearbeat[] hearbeats;
 
-    public HeartbeatThread(long interval) {
+    public HeartbeatThread(long interval, Hearbeat... hearbeats) {
         // 设置守护线程，当非守护线程线程全部结束时，该线程自动结束
         this.setDaemon(true);
-        this.setName(this.getClass().getSimpleName());
+        this.hearbeats = hearbeats;
         this.interval = interval;
     }
 
     @Override
     public void run() {
         while (true) {
+            if (hearbeats == null || hearbeats.length == 0) {
+                break;
+            }
             try {
                 Thread.sleep(interval);
             } catch (InterruptedException e) {
                 LOGGER.error("{}中断异常", this.getName());
                 Thread.currentThread().interrupt();
             }
-            LOGGER.info("已消费：{}", KafkaConstants.TOTAL.get());
+            Arrays.stream(hearbeats).forEach(hearbeat -> hearbeat.execute());
         }
     }
 

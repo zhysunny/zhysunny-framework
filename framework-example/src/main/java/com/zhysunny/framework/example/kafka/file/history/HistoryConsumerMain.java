@@ -3,13 +3,14 @@ package com.zhysunny.framework.example.kafka.file.history;
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.OutputManage;
 import com.zhysunny.framework.common.business.impl.NioTransferJson;
+import com.zhysunny.framework.common.thread.HeartbeatThread;
+import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.kafka.consumer.persist.Persist;
 import com.zhysunny.framework.kafka.consumer.persist.impl.NioFilePersistString;
 import com.zhysunny.framework.kafka.consumer.service.KafkaConsumerService;
-import com.zhysunny.framework.kafka.thread.HeartbeatThread;
 import com.zhysunny.framework.kafka.thread.KafkaConsumerThread;
-import com.zhysunny.framework.kafka.thread.ShutdownHookThread;
+import com.zhysunny.framework.kafka.thread.KafkaHeartbeat;
 
 /**
  * 消费者测试
@@ -20,7 +21,7 @@ public class HistoryConsumerMain {
 
     public static void main(String[] args) {
         Runtime.getRuntime().addShutdownHook(new ShutdownHookThread());
-        new HeartbeatThread(10000).start();
+        new HeartbeatThread(10000, new KafkaHeartbeat()).start();
         int threadNum = 10;
         String name = "history";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);

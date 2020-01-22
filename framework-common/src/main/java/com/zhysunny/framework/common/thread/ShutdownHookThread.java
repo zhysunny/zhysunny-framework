@@ -1,7 +1,8 @@
-package com.zhysunny.framework.kafka.thread;
+package com.zhysunny.framework.common.thread;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Arrays;
 
 /**
  * 当程序终止时执行的线程(kill -9 强制终止不执行)
@@ -12,10 +13,19 @@ public class ShutdownHookThread extends Thread {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ShutdownHookThread.class);
 
+    private ShutdownHook[] hooks;
+
+    public ShutdownHookThread(ShutdownHook... hooks) {
+        this.hooks = hooks;
+    }
+
     @Override
     public void run() {
         // 执行一些程序终止前的操作
-        LOGGER.info("########################## Kafka Client Shutdown #############################");
+        if (hooks != null && hooks.length > 0) {
+            Arrays.stream(hooks).forEach(hook -> hook.shutdown());
+        }
+        LOGGER.info("########################## Shutdown #############################");
     }
 
 }

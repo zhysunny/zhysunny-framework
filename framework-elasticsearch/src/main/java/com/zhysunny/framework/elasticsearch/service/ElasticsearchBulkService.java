@@ -1,4 +1,4 @@
-package com.zhysunny.framework.elasticsearch;
+package com.zhysunny.framework.elasticsearch.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.util.StringUtils;
@@ -29,6 +29,7 @@ public abstract class ElasticsearchBulkService<E> {
      */
     protected ReentrantReadWriteLock.WriteLock updateIndexLock;
 
+    protected List<E> datas;
     /**
      * 当所有数据操作同一个index和type是需要
      */
@@ -45,12 +46,19 @@ public abstract class ElasticsearchBulkService<E> {
         this(null, null);
     }
 
+    public List<E> getDatas() {
+        return datas;
+    }
+
+    public void setDatas(List<E> datas) {
+        this.datas = datas;
+    }
+
     /**
      * 数据字段转换
-     * @param datas
      * @return
      */
-    public abstract Map<String, JSONObject> conversion(List<E> datas);
+    public Map<String, JSONObject> conversion() {return null;}
 
     /**
      * 批量写请求封装
@@ -58,7 +66,15 @@ public abstract class ElasticsearchBulkService<E> {
      * @param datas
      * @return
      */
-    public abstract BulkRequestBuilder buildBulkRequest(TransportClient client, Map<String, JSONObject> datas);
+    public BulkRequestBuilder buildBulkRequest(TransportClient client, Map<String, JSONObject> datas) {return null;}
+
+    /**
+     * 批量写请求封装
+     * @param client
+     * @param datas
+     * @return
+     */
+    public BulkRequestBuilder buildBulkRequest(TransportClient client, List<E> datas) {return null;}
 
     /**
      * 过滤字段为空的值
@@ -81,6 +97,16 @@ public abstract class ElasticsearchBulkService<E> {
     /**
      * 入库请求批量发送
      * @param bulkRequest
+     * @return
+     */
+    public final int request(BulkRequestBuilder bulkRequest) {
+        return request(bulkRequest, null);
+    }
+
+    /**
+     * 入库请求批量发送
+     * @param bulkRequest 批量请求
+     * @param datas       原始数据，用于异常处理
      * @return
      */
     public final int request(BulkRequestBuilder bulkRequest, Map<String, JSONObject> datas) {

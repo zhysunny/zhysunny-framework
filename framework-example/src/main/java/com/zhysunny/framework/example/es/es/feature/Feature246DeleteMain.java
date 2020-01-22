@@ -3,11 +3,11 @@ package com.zhysunny.framework.example.es.es.feature;
 import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.business.impl.NioTransferString;
 import com.zhysunny.framework.common.conf.Configuration;
+import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
+import com.zhysunny.framework.elasticsearch.service.ElasticsearchBulkService;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
 import com.zhysunny.framework.elasticsearch.thread.ElasticsearchBulkThread;
-import com.zhysunny.framework.elasticsearch.thread.ShutdownHookThread;
 import com.zhysunny.framework.elasticsearch.util.EsClientPoolUtils;
 import java.io.File;
 

@@ -2,7 +2,7 @@ package com.zhysunny.framework.elasticsearch.thread;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Transfer;
-import com.zhysunny.framework.elasticsearch.ElasticsearchBulkService;
+import com.zhysunny.framework.elasticsearch.service.ElasticsearchBulkService;
 import com.zhysunny.framework.elasticsearch.util.EsClientPoolUtils;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.client.transport.TransportClient;
