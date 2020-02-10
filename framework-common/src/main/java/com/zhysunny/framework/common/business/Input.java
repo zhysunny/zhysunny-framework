@@ -17,4 +17,10 @@ public interface Input<E> {
      */
     List<E> input() throws IOException;
 
+    /**
+     * 获取业务名称
+     * @return
+     */
+    String getName();
+
 }

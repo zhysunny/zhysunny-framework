@@ -25,6 +25,7 @@ public class TransferThread extends Thread {
 
     @Override
     public void run() {
+        LOGGER.info("############### {} 线程启动 ###############", this.getName());
         try {
             transfer.transfer();
         } catch (Throwable e) {

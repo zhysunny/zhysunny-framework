@@ -1,5 +1,6 @@
 package com.zhysunny.framework.common.constant;
 
+import com.zhysunny.framework.common.conf.Configuration;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -9,6 +10,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Constants {
 
+    protected static final Configuration CONF = Configuration.getInstance();
+
     public static final AtomicInteger TOTAL = new AtomicInteger(0);
+
+    public static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    public static final AtomicInteger SUCCESS_COUNT = new AtomicInteger(0);
+
+    public static final AtomicInteger ERROR_COUNT = new AtomicInteger(0);
 
 }

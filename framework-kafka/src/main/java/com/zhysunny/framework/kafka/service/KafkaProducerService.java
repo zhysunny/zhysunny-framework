@@ -21,6 +21,7 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
     protected String name;
     protected String topic;
 
+    @Override
     public String getName() {
         return name;
     }

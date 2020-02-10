@@ -23,6 +23,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
     private TransportClient client;
     private SearchResponse searchResponse;
     private String scrollId;
+    protected String name;
 
     public ElasticsearchScrollQueryService(TransportClient client, String index) {
         this.client = client;
@@ -59,6 +60,11 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
     @Override
     public List<JSONObject> input() throws IOException {
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
 }

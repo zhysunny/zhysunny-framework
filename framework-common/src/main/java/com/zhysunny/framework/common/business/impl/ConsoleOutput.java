@@ -23,4 +23,9 @@ public class ConsoleOutput implements Output<Object> {
         return null;
     }
 
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
 }

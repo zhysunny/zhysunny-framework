@@ -27,4 +27,10 @@ public interface Output<E> {
      */
     Object write(Map<String, E> datas) throws IOException;
 
+    /**
+     * 获取业务名称
+     * @return
+     */
+    String getName();
+
 }

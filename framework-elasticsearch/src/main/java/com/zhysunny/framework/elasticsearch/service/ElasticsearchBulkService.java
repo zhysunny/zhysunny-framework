@@ -36,6 +36,7 @@ public class ElasticsearchBulkService<E> implements Output<E> {
     protected String index;
     protected String type;
     protected TransportClient client;
+    protected String name;
 
     public ElasticsearchBulkService(TransportClient client, String index, String type) {
         this.client = client;
@@ -152,6 +153,11 @@ public class ElasticsearchBulkService<E> implements Output<E> {
     @Override
     public Object write(Map<String, E> datas) {
         return null;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
 }

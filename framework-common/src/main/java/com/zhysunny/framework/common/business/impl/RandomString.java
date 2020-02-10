@@ -30,4 +30,9 @@ public class RandomString implements Input<String> {
         return datas;
     }
 
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
 }

@@ -23,4 +23,9 @@ public class FileInput<E> implements Input<E> {
         return fileReadWrite.read();
     }
 
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
 }

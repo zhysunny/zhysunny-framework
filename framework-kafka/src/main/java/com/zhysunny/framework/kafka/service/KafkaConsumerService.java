@@ -33,6 +33,7 @@ public abstract class KafkaConsumerService<K, V> implements Input<V> {
         this.consumer = consumer;
     }
 
+    @Override
     public String getName() {
         return name;
     }

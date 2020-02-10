@@ -29,4 +29,9 @@ public class FileOutput<E> implements Output<E> {
         return fileReadWrite.write(datas);
     }
 
+    @Override
+    public String getName() {
+        return this.getClass().getSimpleName();
+    }
+
 }
