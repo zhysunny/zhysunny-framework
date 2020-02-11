@@ -10,27 +10,16 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class ClientPoolUtils<T> {
 
-    private ClientPoolUtils() {}
-
-    private static class Inner {
-
-        public static final ClientPoolUtils INSTANCE = new ClientPoolUtils();
-
-    }
-
     private int length;
     private BlockingQueue<T> clients;
     private Client clientUtil;
 
-    public static void init(Client client, int size) {
-        ClientPoolUtils instance = Inner.INSTANCE;
+    public static ClientPoolUtils init(Client client, int size) {
+        ClientPoolUtils instance = new ClientPoolUtils();
         instance.length = size;
         instance.clients = new LinkedBlockingQueue<>();
         instance.clientUtil = client;
-    }
-
-    public static ClientPoolUtils getInstance() {
-        return Inner.INSTANCE;
+        return instance;
     }
 
     /**

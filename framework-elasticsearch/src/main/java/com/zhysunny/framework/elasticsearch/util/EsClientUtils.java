@@ -24,6 +24,10 @@ public class EsClientUtils implements ClientPoolUtils.Client<TransportClient> {
         this.transportHosts = transportHosts;
     }
 
+    public EsClientUtils() {
+        this(EsConstants.ES_CLUSTER_NAME_VALUE, EsConstants.ES_SERVER_HOSTS_VALUE);
+    }
+
     @Override
     public TransportClient getClient() {
         TransportClient client = null;

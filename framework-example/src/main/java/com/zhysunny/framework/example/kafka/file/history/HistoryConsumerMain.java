@@ -6,7 +6,7 @@ import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.business.impl.FileOutput;
 import com.zhysunny.framework.common.business.impl.ListToListTransfer;
 import com.zhysunny.framework.common.file.FileReadWrite;
-import com.zhysunny.framework.common.file.OioFileReadWrite;
+import com.zhysunny.framework.common.file.FileReadWriteString;
 import com.zhysunny.framework.common.thread.HeartbeatThread;
 import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.thread.TransferThread;
@@ -30,7 +30,7 @@ public class HistoryConsumerMain {
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService<String, JSONObject> kafkaConsumerService = new KafkaConsumerHistoryServiceImpl();
             kafkaConsumerService.setCommit(false);
-            FileReadWrite<String> fileReadWrite = new OioFileReadWrite(name + i);
+            FileReadWrite<String> fileReadWrite = new FileReadWriteString(name + i);
             Output<JSONObject> output = new FileOutput<>(fileReadWrite);
             Transfer transfer = new ListToListTransfer(kafkaConsumerService, output);
             threadPools.addThread(new TransferThread(name + i, transfer));
