@@ -52,6 +52,18 @@ public interface FileReadWrite<E> extends Closeable {
     Object write(E data) throws IOException;
 
     /**
+     * 针对写数据的刷盘
+     * @throws IOException
+     */
+    void flush() throws IOException;
+
+    /**
+     * 文件重置操作，针对追加写，到一定程度后重置文件
+     * @throws IOException
+     */
+    void reset() throws IOException;
+
+    /**
      * 获取当前操作文件
      * @return
      */

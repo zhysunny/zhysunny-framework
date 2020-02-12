@@ -78,9 +78,8 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
                 return toAny(line);
             }
         } catch (IOException e) {
-            throw e;
-        } finally {
             close();
+            throw e;
         }
         return null;
     }
@@ -99,9 +98,8 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
                 bw.newLine();
             }
         } catch (IOException e) {
-            throw e;
-        } finally {
             close();
+            throw e;
         }
         return datas.size();
     }
@@ -124,11 +122,22 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
             bw.write(toString(data));
             bw.newLine();
         } catch (IOException e) {
-            throw e;
-        } finally {
             close();
+            throw e;
         }
         return 1;
+    }
+
+    @Override
+    public void flush() throws IOException {
+        bw.flush();
+    }
+
+    @Override
+    public void reset() {
+        close();
+        delete();
+        bw = null;
     }
 
     @Override
