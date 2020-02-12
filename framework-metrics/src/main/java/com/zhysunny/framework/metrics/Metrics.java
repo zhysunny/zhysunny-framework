@@ -63,7 +63,7 @@ public class Metrics extends MetricRegistry implements Closeable {
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
         for (Reporter reporter : reporters) {
             if (reporter instanceof JmxReporter) {
                 ((JmxReporter)reporter).stop();
