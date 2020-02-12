@@ -22,6 +22,7 @@
         <module>framework-example</module>
         <module>framework-elasticsearch</module>
         <module>framework-hbase</module>
+        <module>framework-metrics</module>
     </modules>
 
     <name>Zhysunny Framework</name>
@@ -62,6 +63,11 @@
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>framework-hbase</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>framework-metrics</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
