@@ -3,7 +3,7 @@ package com.zhysunny.framework.example.console.kafka.message;
 import com.zhysunny.framework.common.business.Input;
 import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.business.impl.ListToListTransfer;
-import com.zhysunny.framework.common.business.impl.RandomString;
+import com.zhysunny.framework.common.business.impl.RandomStringInput;
 import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.thread.TransferThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
@@ -21,7 +21,7 @@ public class MessageProducerMain {
         int threadNum = 10;
         String name = "message";
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
-        Input input = new RandomString(1000, 1024);
+        Input input = new RandomStringInput(1000, 1024);
         KafkaProducerService<String, String> kafkaProducerService = new KafkaProducerMessageServiceImpl();
         Transfer transfer = new ListToListTransfer(input, kafkaProducerService);
         for (int i = 0; i < threadNum; i++) {

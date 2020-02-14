@@ -10,12 +10,12 @@ import java.util.List;
  * @author 章云
  * @date 2019/12/27 16:32
  */
-public class RandomString implements Input<String> {
+public class RandomStringInput implements Input<String> {
 
     private int total;
     private int size;
 
-    public RandomString(int total, int size) {
+    public RandomStringInput(int total, int size) {
         this.total = total;
         this.size = size;
     }
