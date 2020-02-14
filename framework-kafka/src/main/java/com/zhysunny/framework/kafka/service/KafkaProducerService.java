@@ -1,6 +1,7 @@
 package com.zhysunny.framework.kafka.service;
 
 import com.zhysunny.framework.common.business.Output;
+import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
@@ -26,15 +27,20 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
         return name;
     }
 
+    public String getTopic() {
+        return topic;
+    }
+
     /**
      * 创建消费者
      */
     public abstract void createProducer();
 
     /**
-     * 发送数据到kafka
+     * 同步发送
+     * @param datas
      */
-    public final void send(List<V> datas) {
+    public final void sendSync(List<V> datas) {
         ProducerRecord<K, V> record;
         for (V value : datas) {
             record = new ProducerRecord<>(topic, value);
@@ -46,7 +52,11 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
         }
     }
 
-    public final void send(Map<K, V> datas) {
+    /**
+     * 同步发送
+     * @param datas
+     */
+    public final void sendSync(Map<K, V> datas) {
         ProducerRecord<K, V> record;
         for (Map.Entry<K, V> entry : datas.entrySet()) {
             record = new ProducerRecord<>(topic, entry.getKey(), entry.getValue());
@@ -55,6 +65,32 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
             } catch (InterruptedException | ExecutionException e) {
                 LOGGER.error("kafka生产者发送异常record：{}", record.toString(), e);
             }
+        }
+    }
+
+    /**
+     * 异步发送
+     * @param datas
+     * @param callback
+     */
+    public final void sendAsync(List<V> datas, Callback callback) {
+        ProducerRecord<K, V> record;
+        for (V value : datas) {
+            record = new ProducerRecord<>(topic, value);
+            producer.send(record, callback);
+        }
+    }
+
+    /**
+     * 异步发送
+     * @param datas
+     * @param callback
+     */
+    public final void sendAsync(Map<K, V> datas, Callback callback) {
+        ProducerRecord<K, V> record;
+        for (Map.Entry<K, V> entry : datas.entrySet()) {
+            record = new ProducerRecord<>(topic, entry.getKey(), entry.getValue());
+            producer.send(record, callback);
         }
     }
 

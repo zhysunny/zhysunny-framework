@@ -1,5 +1,6 @@
 package com.zhysunny.framework.common.business;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  * @author 章云
  * @date 2019/12/27 15:46
  */
-public interface Input<E> {
+public interface Input<E> extends Closeable {
 
     /**
      * 输入

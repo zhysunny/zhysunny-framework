@@ -4,6 +4,7 @@ import com.zhysunny.framework.common.business.Input;
 import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import java.io.Closeable;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
  * @author 章云
  * @date 2019/9/19 15:10
  */
-public abstract class KafkaConsumerService<K, V> implements Input<V> {
+public abstract class KafkaConsumerService<K, V> implements Input<V>, Closeable {
 
     private static final long LEASE_TIME = Duration.ofSeconds(60).toMillis();
     protected KafkaConsumer<K, V> consumer;
@@ -71,4 +72,8 @@ public abstract class KafkaConsumerService<K, V> implements Input<V> {
         return poll();
     }
 
+    @Override
+    public void close() {
+        consumer.close();
+    }
 }

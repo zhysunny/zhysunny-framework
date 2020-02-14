@@ -1,5 +1,6 @@
 package com.zhysunny.framework.common.business;
 
+import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Map;
  * @author 章云
  * @date 2019/12/27 21:22
  */
-public interface Output<E> {
+public interface Output<E> extends Closeable {
 
     /**
      * 输出

@@ -11,6 +11,7 @@ import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -160,4 +161,7 @@ public class ElasticsearchBulkService<E> implements Output<E> {
         return name;
     }
 
+    @Override
+    public void close() {
+    }
 }

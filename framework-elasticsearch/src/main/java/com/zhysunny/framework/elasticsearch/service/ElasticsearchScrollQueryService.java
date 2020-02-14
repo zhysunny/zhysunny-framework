@@ -67,4 +67,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
         return name;
     }
 
+    @Override
+    public void close() {
+    }
 }

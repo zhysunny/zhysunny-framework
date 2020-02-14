@@ -1,6 +1,7 @@
 package com.zhysunny.framework.common.business.impl;
 
 import com.zhysunny.framework.common.business.Input;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,4 +33,7 @@ public class StaticArrayInput implements Input<byte[]> {
         return this.getClass().getSimpleName();
     }
 
+    @Override
+    public void close() {
+    }
 }

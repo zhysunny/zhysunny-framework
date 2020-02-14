@@ -35,4 +35,7 @@ public class RandomStringInput implements Input<String> {
         return this.getClass().getSimpleName();
     }
 
+    @Override
+    public void close() {
+    }
 }

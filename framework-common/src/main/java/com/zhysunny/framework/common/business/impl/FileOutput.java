@@ -34,4 +34,8 @@ public class FileOutput<E> implements Output<E> {
         return this.getClass().getSimpleName();
     }
 
+    @Override
+    public void close() throws IOException {
+        fileReadWrite.close();
+    }
 }

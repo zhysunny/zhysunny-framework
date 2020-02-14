@@ -1,6 +1,7 @@
 package com.zhysunny.framework.common.business.impl;
 
 import com.zhysunny.framework.common.business.Output;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -22,5 +23,9 @@ public class NoOperationOutput implements Output<Object> {
     @Override
     public String getName() {
         return this.getClass().getSimpleName();
+    }
+
+    @Override
+    public void close() {
     }
 }

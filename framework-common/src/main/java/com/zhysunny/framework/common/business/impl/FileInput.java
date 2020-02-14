@@ -28,4 +28,8 @@ public class FileInput<E> implements Input<E> {
         return this.getClass().getSimpleName();
     }
 
+    @Override
+    public void close() throws IOException {
+        fileReadWrite.close();
+    }
 }

@@ -17,12 +17,7 @@
         <!-- module start -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>framework-common</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>framework-springboot</artifactId>
+            <artifactId>framework-example</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- module end -->
@@ -37,8 +32,7 @@
                     <appendAssemblyId>false</appendAssemblyId>
                     <descriptors>
                         <!-- 引用的assembly配置文件，可以用多个，即可以同时打包多个格式的包 -->
-                        <descriptor>gzip.xml</descriptor>
-                        <descriptor>dir.xml</descriptor>
+                        <descriptor>package.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>

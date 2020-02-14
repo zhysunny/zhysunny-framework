@@ -1,0 +1,39 @@
+package com.zhysunny.framework.example.performance.kafka.producer;
+
+import com.codahale.metrics.Meter;
+import com.zhysunny.framework.common.business.Input;
+import com.zhysunny.framework.common.business.Output;
+import com.zhysunny.framework.common.business.Transfer;
+import com.zhysunny.framework.example.kafka.StaticArrayServiceImpl;
+import org.apache.kafka.clients.producer.ProducerRecord;
+import java.io.Closeable;
+import java.io.IOException;
+import java.util.List;
+
+/**
+ * @author 章云
+ * @date 2020/2/14 10:41
+ */
+public class ProducerAsyncTransfer extends Transfer {
+
+    private Meter meter;
+    private String topic;
+
+    public ProducerAsyncTransfer(Input input, String topic, Meter meter, Output... outputs) {
+        super(input, null, outputs);
+        this.meter = meter;
+        this.topic = topic;
+    }
+
+    @Override
+    public void transfer() throws IOException {
+        List<byte[]> bytes = this.input.input();
+        ProducerRecord<String, byte[]> record = new ProducerRecord<>(topic, bytes.get(0));
+        StaticArrayServiceImpl output = (StaticArrayServiceImpl)outputs[0];
+        while (running) {
+            output.sendAsync(record);
+            meter.mark();
+        }
+    }
+
+}

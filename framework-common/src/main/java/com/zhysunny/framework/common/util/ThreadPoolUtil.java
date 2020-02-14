@@ -1,7 +1,9 @@
 package com.zhysunny.framework.common.util;
 
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 公共线程池 单例模式
@@ -128,20 +130,10 @@ public class ThreadPoolUtil {
     }
 
     /**
-     * 等待
-     * @param timeout
-     * @param unit
+     * 直到线程池完全终止
      */
-    public void await(long timeout, TimeUnit unit) throws InterruptedException {
-        threadPools.awaitTermination(timeout, unit);
-    }
-
-    /**
-     * 等待
-     */
-    public void join() throws InterruptedException {
-        while (getActiveCount() > 0) {
-            await(1, TimeUnit.SECONDS);
+    public void join() {
+        while (threadPools.isTerminating() && !threadPools.isTerminated()) {
         }
     }
 

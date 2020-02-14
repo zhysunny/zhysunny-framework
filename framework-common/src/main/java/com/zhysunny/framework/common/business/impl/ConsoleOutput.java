@@ -1,6 +1,7 @@
 package com.zhysunny.framework.common.business.impl;
 
 import com.zhysunny.framework.common.business.Output;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,4 +29,7 @@ public class ConsoleOutput implements Output<Object> {
         return this.getClass().getSimpleName();
     }
 
+    @Override
+    public void close() {
+    }
 }
