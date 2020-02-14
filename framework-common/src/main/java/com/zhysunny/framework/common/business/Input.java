@@ -16,7 +16,7 @@ public interface Input<E> extends Closeable {
      * @return
      * @throws IOException
      */
-    List<E> input() throws IOException;
+    List<E> read() throws IOException;
 
     /**
      * 获取业务名称

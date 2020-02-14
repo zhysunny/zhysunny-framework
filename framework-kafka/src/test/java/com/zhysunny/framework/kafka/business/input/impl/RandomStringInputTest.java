@@ -32,14 +32,14 @@ public class RandomStringInputTest {
     }
 
     /**
-     * Method: input()
+     * Method: read()
      */
     @Test
     public void testInput() throws Exception {
         int total = 10;
         int size = 1024;
         Input<String> input = new RandomStringInput(total, size);
-        List<String> datas = input.input();
+        List<String> datas = input.read();
         assertEquals(datas.size(), total);
         datas.forEach(str -> assertEquals(str.length(), size));
     }

@@ -24,7 +24,7 @@ public class ListToListTransfer extends Transfer {
 
     @Override
     public void transfer() throws IOException {
-        List<?> in = input.input();
+        List<?> in = input.read();
         final List<?> conversion = business != null ? business.conversion(in) : in;
         Arrays.stream(outputs).forEach(output -> {
             try {

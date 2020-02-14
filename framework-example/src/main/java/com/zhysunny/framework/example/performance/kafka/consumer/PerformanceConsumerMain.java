@@ -43,7 +43,6 @@ public class PerformanceConsumerMain {
         List<Transfer> transfers = new ArrayList<>(threadNum);
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService kafkaConsumerService = new KafkaConsumerPerformanceServiceImpl();
-            kafkaConsumerService.setCommit(false);
             Transfer transfer = new ConsumerTransfer(kafkaConsumerService, meter);
             threadPools.addThread(new TransferThread(name + i, transfer));
             consumers.add(kafkaConsumerService);

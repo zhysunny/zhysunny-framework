@@ -28,7 +28,6 @@ public class MessageConsumerMain {
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService<String, JSONObject> kafkaConsumerService = new KafkaConsumerHistoryServiceImpl();
-            kafkaConsumerService.setCommit(false);
             Output output = new ConsoleOutput();
             Transfer transfer = new ListToListTransfer(kafkaConsumerService, output);
             threadPools.addThread(new TransferThread(name + i, transfer));

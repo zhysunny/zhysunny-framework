@@ -10,7 +10,7 @@ import java.util.Map;
  * @author 章云
  * @date 2019/10/22 14:57
  */
-public class StringToJSONObjectDeserializer implements Deserializer<JSONObject> {
+public class StringToJsonDeserializer implements Deserializer<JSONObject> {
 
     private static final StringDeserializer STRING_DESERIALIZER = new StringDeserializer();
 

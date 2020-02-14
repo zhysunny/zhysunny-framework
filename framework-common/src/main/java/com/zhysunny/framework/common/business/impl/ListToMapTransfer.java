@@ -21,7 +21,7 @@ public class ListToMapTransfer extends Transfer {
 
     @Override
     public void transfer() throws IOException {
-        List<?> in = input.input();
+        List<?> in = input.read();
         final Map<String, ?> map = business.conversionToMap(in);
         Arrays.stream(outputs).forEach(output -> {
             try {

@@ -20,7 +20,7 @@ public class StaticArrayInput implements Input<byte[]> {
     }
 
     @Override
-    public List<byte[]> input() {
+    public List<byte[]> read() {
         final List<byte[]> datas = new ArrayList<>(1);
         byte[] bytes = new byte[size];
         Arrays.fill(bytes, (byte)0);

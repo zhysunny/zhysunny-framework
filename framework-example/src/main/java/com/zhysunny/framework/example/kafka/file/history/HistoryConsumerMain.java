@@ -29,7 +29,6 @@ public class HistoryConsumerMain {
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
             KafkaConsumerService<String, JSONObject> kafkaConsumerService = new KafkaConsumerHistoryServiceImpl();
-            kafkaConsumerService.setCommit(false);
             FileReadWrite<String> fileReadWrite = new FileReadWriteString(name + i);
             Output<JSONObject> output = new FileOutput<>(fileReadWrite);
             Transfer transfer = new ListToListTransfer(kafkaConsumerService, output);

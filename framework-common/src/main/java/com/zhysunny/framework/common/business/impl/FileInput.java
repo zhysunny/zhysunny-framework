@@ -19,7 +19,7 @@ public class FileInput<E> implements Input<E> {
     }
 
     @Override
-    public final List<E> input() throws IOException {
+    public final List<E> read() throws IOException {
         return fileReadWrite.read();
     }
 

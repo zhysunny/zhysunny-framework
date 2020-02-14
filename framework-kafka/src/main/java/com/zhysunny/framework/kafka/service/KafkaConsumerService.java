@@ -1,12 +1,8 @@
 package com.zhysunny.framework.kafka.service;
 
 import com.zhysunny.framework.common.business.Input;
-import com.zhysunny.framework.kafka.constant.KafkaConstants;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import java.io.Closeable;
-import java.io.IOException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,23 +11,18 @@ import java.util.List;
  * @author 章云
  * @date 2019/9/19 15:10
  */
-public abstract class KafkaConsumerService<K, V> implements Input<V>, Closeable {
+public abstract class KafkaConsumerService<K, V> implements Input<V> {
 
-    private static final long LEASE_TIME = Duration.ofSeconds(60).toMillis();
+    private static final long LEASE_TIME = 60000;
     protected KafkaConsumer<K, V> consumer;
     protected String name;
-    private boolean commit = true;
 
-    public void setCommit(boolean commit) {
-        this.commit = commit;
-    }
-
-    /**
-     * 用于单元测试
-     * @param consumer
-     */
     public void setConsumer(KafkaConsumer consumer) {
         this.consumer = consumer;
+    }
+
+    public KafkaConsumer<K, V> getConsumer() {
+        return consumer;
     }
 
     @Override
@@ -51,7 +42,6 @@ public abstract class KafkaConsumerService<K, V> implements Input<V>, Closeable 
         final List<V> datas = new ArrayList<>();
         ConsumerRecords<K, V> records = consumer.poll(LEASE_TIME);
         records.forEach(record -> datas.add(record.value()));
-        KafkaConstants.TOTAL.addAndGet(datas.size());
         return datas;
     }
 
@@ -59,13 +49,11 @@ public abstract class KafkaConsumerService<K, V> implements Input<V>, Closeable 
      * 提交offset
      */
     public final void commit() {
-        if (commit) {
-            consumer.commitSync();
-        }
+        consumer.commitSync();
     }
 
     @Override
-    public List<V> input() throws IOException {
+    public List<V> read() {
         if (consumer == null) {
             createConsumer();
         }
@@ -74,6 +62,8 @@ public abstract class KafkaConsumerService<K, V> implements Input<V>, Closeable 
 
     @Override
     public void close() {
-        consumer.close();
+        if (consumer != null) {
+            consumer.close();
+        }
     }
 }

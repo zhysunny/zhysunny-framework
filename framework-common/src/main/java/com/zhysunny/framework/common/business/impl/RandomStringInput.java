@@ -21,7 +21,7 @@ public class RandomStringInput implements Input<String> {
     }
 
     @Override
-    public List<String> input() {
+    public List<String> read() {
         final List<String> datas = new ArrayList<>(total);
         for (int i = 0; i < total; i++) {
             String str = RandomUtils.allCode(size);

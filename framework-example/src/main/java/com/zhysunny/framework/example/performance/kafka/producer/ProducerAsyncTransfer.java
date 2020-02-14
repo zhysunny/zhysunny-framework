@@ -6,7 +6,6 @@ import com.zhysunny.framework.common.business.Output;
 import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.example.kafka.StaticArrayServiceImpl;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import java.io.Closeable;
 import java.io.IOException;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class ProducerAsyncTransfer extends Transfer {
 
     @Override
     public void transfer() throws IOException {
-        List<byte[]> bytes = this.input.input();
+        List<byte[]> bytes = this.input.read();
         ProducerRecord<String, byte[]> record = new ProducerRecord<>(topic, bytes.get(0));
         StaticArrayServiceImpl output = (StaticArrayServiceImpl)outputs[0];
         while (running) {

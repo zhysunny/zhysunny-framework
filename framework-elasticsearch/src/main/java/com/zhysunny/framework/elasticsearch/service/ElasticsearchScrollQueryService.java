@@ -2,6 +2,7 @@ package com.zhysunny.framework.elasticsearch.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Input;
+import com.zhysunny.framework.common.exception.UnImplementedMethodException;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
@@ -10,7 +11,6 @@ import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
-import java.io.IOException;
 import java.util.List;
 
 /**
@@ -44,7 +44,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
         }
     }
 
-    public SearchHits getHits() {
+    public SearchHits getSearchHits() {
         if (searchResponse == null) {
             searchResponse = builder.get();
             this.scrollId = searchResponse.getScrollId();
@@ -58,8 +58,8 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
     }
 
     @Override
-    public List<JSONObject> input() throws IOException {
-        return null;
+    public List<JSONObject> read() {
+        throw new UnImplementedMethodException();
     }
 
     @Override
