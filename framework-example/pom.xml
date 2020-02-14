@@ -30,11 +30,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>framework-metrics</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.znv</groupId>
-            <artifactId>face-retrieval-plugin</artifactId>
-            <version>2.00</version>
-        </dependency>
     </dependencies>
 
 </project>
