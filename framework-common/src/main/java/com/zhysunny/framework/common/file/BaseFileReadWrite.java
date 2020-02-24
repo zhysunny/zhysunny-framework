@@ -16,7 +16,7 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
 
     private final File file;
     private BufferedReader br;
-    private BufferedWriter bw;
+    private FileOutputStream fos;
     private final boolean append;
 
     public BaseFileReadWrite(File file, boolean append) {
@@ -86,16 +86,15 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
 
     @Override
     public Object write(List<E> datas) throws IOException {
-        if (bw == null) {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append)));
+        if (fos == null) {
+            fos = new FileOutputStream(file, append);
         }
         try {
             for (E data : datas) {
                 if (data == null) {
                     continue;
                 }
-                bw.write(toString(data));
-                bw.newLine();
+                fos.write((toString(data) + '\n').getBytes());
             }
         } catch (IOException e) {
             close();
@@ -112,15 +111,14 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
 
     @Override
     public Object write(E data) throws IOException {
-        if (bw == null) {
-            bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file, append)));
+        if (fos == null) {
+            fos = new FileOutputStream(file, append);
         }
         if (data == null) {
             return 0;
         }
         try {
-            bw.write(toString(data));
-            bw.newLine();
+            fos.write((toString(data) + '\n').getBytes());
         } catch (IOException e) {
             close();
             throw e;
@@ -130,14 +128,14 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
 
     @Override
     public void flush() throws IOException {
-        bw.flush();
+        fos.flush();
     }
 
     @Override
     public void reset() {
         close();
         delete();
-        bw = null;
+        fos = null;
     }
 
     @Override
@@ -147,7 +145,7 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
 
     @Override
     public void close() {
-        FileUtils.close(br, bw);
+        FileUtils.close(br, fos);
     }
 
     /**
