@@ -3,7 +3,6 @@ package com.zhysunny.framework.elasticsearch.handler;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.util.ClassUtils;
-import com.zhysunny.framework.elasticsearch.EsExceptionType;
 import com.zhysunny.framework.elasticsearch.handler.impl.MapperParsingExceptionHandler;
 import org.elasticsearch.action.bulk.BulkItemResponse;
 import org.elasticsearch.action.bulk.BulkResponse;

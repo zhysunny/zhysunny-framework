@@ -1,4 +1,4 @@
-package com.zhysunny.framework.elasticsearch;
+package com.zhysunny.framework.elasticsearch.handler;
 
 /**
  * ES入库异常分类

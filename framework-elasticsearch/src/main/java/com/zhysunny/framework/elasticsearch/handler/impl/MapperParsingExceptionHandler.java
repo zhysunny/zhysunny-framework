@@ -3,7 +3,7 @@ package com.zhysunny.framework.elasticsearch.handler.impl;
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.util.DateUtils;
 import com.zhysunny.framework.common.util.FileUtils;
-import com.zhysunny.framework.elasticsearch.EsExceptionType;
+import com.zhysunny.framework.elasticsearch.handler.EsExceptionType;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
 import java.io.File;
 import java.io.FileOutputStream;
