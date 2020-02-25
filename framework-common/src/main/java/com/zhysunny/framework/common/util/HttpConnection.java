@@ -106,7 +106,9 @@ public class HttpConnection {
         return sb.toString();
     }
 
-    // 断开连接
+    /**
+     * 断开连接
+     */
     public void close() {
         try {
             if (connection != null) {

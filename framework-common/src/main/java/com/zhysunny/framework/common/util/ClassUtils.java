@@ -76,7 +76,8 @@ public class ClassUtils {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Enumeration<JarEntry> jarEntries = jarFile.entries();//这里获得jar包里面所有目录和文件
+        //这里获得jar包里面所有目录和文件
+        Enumeration<JarEntry> jarEntries = jarFile.entries();
         JarEntry jarEntry = null;
         String jarEntryName = null;
         while (jarEntries.hasMoreElements()) {
