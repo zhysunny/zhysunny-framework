@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.performance.kafka.producer;
+package com.zhysunny.framework.example.performance.kafka.producer.sync;
 
 import com.codahale.metrics.CsvReporter;
 import com.codahale.metrics.Meter;
@@ -9,7 +9,8 @@ import com.zhysunny.framework.common.business.impl.StaticArrayInput;
 import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.thread.TransferThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.example.kafka.StaticArrayServiceImpl;
+import com.zhysunny.framework.example.performance.kafka.producer.StaticArrayServiceImpl;
+import com.zhysunny.framework.example.kafka.producer.ProducerShutdownHook;
 import com.zhysunny.framework.kafka.service.KafkaProducerService;
 import com.zhysunny.framework.metrics.Metrics;
 import java.io.File;
@@ -20,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @author 章云
  * @date 2020/2/14 10:37
  */
-public class PerformanceProducerAsyncMain {
+public class PerformanceProducerSyncMain {
     public static void main(String[] args) {
         // 读取参数
         int threadNum = 10;
@@ -33,7 +34,7 @@ public class PerformanceProducerAsyncMain {
         }
         // 设置Metrics监听
         Metrics metrics = Metrics.getInstance();
-        String name = "performance.producer.async";
+        String name = "performance.producer.sync";
         Meter meter = metrics.meter(name);
         File dir = new File("metrics");
         if (!dir.exists()) {
@@ -47,7 +48,7 @@ public class PerformanceProducerAsyncMain {
         KafkaProducerService<String, byte[]> kafkaProducerService = new StaticArrayServiceImpl();
         kafkaProducerService.createProducer();
         String topic = kafkaProducerService.getTopic();
-        Transfer transfer = new ProducerAsyncTransfer(input, topic, meter, kafkaProducerService);
+        Transfer transfer = new ProducerSyncTransfer(input, topic, meter, kafkaProducerService);
         ThreadPoolUtil threadPools = ThreadPoolUtil.getInstance(threadNum);
         for (int i = 0; i < threadNum; i++) {
             threadPools.addThread(new TransferThread(name + i, transfer));

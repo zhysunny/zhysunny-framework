@@ -7,7 +7,7 @@ import com.zhysunny.framework.common.business.Transfer;
 import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.thread.TransferThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
-import com.zhysunny.framework.example.kafka.KafkaConsumerPerformanceServiceImpl;
+import com.zhysunny.framework.example.kafka.consumer.ConsumerShutdownHook;
 import com.zhysunny.framework.kafka.service.KafkaConsumerService;
 import com.zhysunny.framework.metrics.Metrics;
 import java.io.File;

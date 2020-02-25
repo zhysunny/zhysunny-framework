@@ -1,21 +1,23 @@
-package com.zhysunny.framework.example.kafka;
+package com.zhysunny.framework.example.kafka.producer.avro;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.properties.PropertiesReader;
 import com.zhysunny.framework.kafka.service.KafkaProducerService;
 import com.zhysunny.framework.kafka.service.KafkaTopicService;
 import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
 
 /**
+ * kafka生产者接口
  * @author 章云
- * @date 2020/2/14 9:53
+ * @date 2019/9/19 15:10
  */
-public class StaticArrayServiceImpl extends KafkaProducerService<String, byte[]> {
+public class KafkaProducerAvroServiceImpl extends KafkaProducerService<String, JSONObject> {
 
-    public StaticArrayServiceImpl() {
-        this.name = "performance";
+    public KafkaProducerAvroServiceImpl() {
+        this.name = "avro";
     }
 
     @Override
@@ -23,9 +25,7 @@ public class StaticArrayServiceImpl extends KafkaProducerService<String, byte[]>
         Properties props = null;
         try {
             props = new PropertiesReader("conf/kafka/servers.properties",
-            "conf/kafka/producer/performance.properties")
-            .builder()
-            .getProps();
+            "conf/kafka/producer/avro.properties").builder().getProps();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,17 +40,16 @@ public class StaticArrayServiceImpl extends KafkaProducerService<String, byte[]>
         topicService.close();
     }
 
-    public void sendAsync(ProducerRecord<String, byte[]> record) {
-        producer.send(record);
-    }
-
-    public void sendSync(ProducerRecord<String, byte[]> record) {
+    @Override
+    public Object write(List<JSONObject> datas) {
         try {
-            producer.send(record).get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            sendSync(datas);
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        return null;
     }
+
 }

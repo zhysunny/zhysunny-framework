@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.kafka.console.message;
+package com.zhysunny.framework.example.kafka.consumer.console.message;
 
 import com.zhysunny.framework.common.properties.PropertiesReader;
 import com.zhysunny.framework.kafka.service.KafkaConsumerService;
@@ -22,7 +22,8 @@ public class KafkaConsumerMessageServiceImpl extends KafkaConsumerService<String
     public void createConsumer() {
         Properties props = null;
         try {
-            props = new PropertiesReader("conf/kafka/kafka.properties").builder().getProps();
+            props = new PropertiesReader("conf/kafka/servers.properties",
+            "conf/kafka/consumer/message.properties").builder().getProps();
         } catch (Exception e) {
             e.printStackTrace();
         }

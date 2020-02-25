@@ -1,10 +1,10 @@
-package com.zhysunny.framework.example.performance.kafka.producer;
+package com.zhysunny.framework.example.performance.kafka.producer.async;
 
 import com.codahale.metrics.Meter;
 import com.zhysunny.framework.common.business.Input;
 import com.zhysunny.framework.common.business.Output;
 import com.zhysunny.framework.common.business.Transfer;
-import com.zhysunny.framework.example.kafka.StaticArrayServiceImpl;
+import com.zhysunny.framework.example.performance.kafka.producer.StaticArrayServiceImpl;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import java.io.IOException;
 import java.util.List;

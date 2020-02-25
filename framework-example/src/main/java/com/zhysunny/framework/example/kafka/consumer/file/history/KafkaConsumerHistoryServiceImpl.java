@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.kafka.file.history;
+package com.zhysunny.framework.example.kafka.consumer.file.history;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.properties.PropertiesReader;
@@ -23,7 +23,8 @@ public class KafkaConsumerHistoryServiceImpl extends KafkaConsumerService<String
     public void createConsumer() {
         Properties props = null;
         try {
-            props = new PropertiesReader("conf/kafka/history.properties").builder().getProps();
+            props = new PropertiesReader("conf/kafka/servers.properties",
+            "conf/kafka/consumer/history.properties").builder().getProps();
         } catch (Exception e) {
             e.printStackTrace();
         }

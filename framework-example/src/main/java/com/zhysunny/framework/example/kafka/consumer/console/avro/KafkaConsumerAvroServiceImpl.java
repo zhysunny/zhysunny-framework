@@ -1,5 +1,6 @@
-package com.zhysunny.framework.example.kafka;
+package com.zhysunny.framework.example.kafka.consumer.console.avro;
 
+import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.properties.PropertiesReader;
 import com.zhysunny.framework.kafka.service.KafkaConsumerService;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -12,10 +13,10 @@ import java.util.Properties;
  * @author 章云
  * @date 2019/9/19 15:07
  */
-public class KafkaConsumerPerformanceServiceImpl extends KafkaConsumerService<String, String> {
+public class KafkaConsumerAvroServiceImpl extends KafkaConsumerService<String, JSONObject> {
 
-    public KafkaConsumerPerformanceServiceImpl() {
-        this.name = "performance";
+    public KafkaConsumerAvroServiceImpl() {
+        this.name = "avro";
     }
 
     @Override
@@ -23,9 +24,7 @@ public class KafkaConsumerPerformanceServiceImpl extends KafkaConsumerService<St
         Properties props = null;
         try {
             props = new PropertiesReader("conf/kafka/servers.properties",
-            "conf/kafka/consumer/performance.properties")
-            .builder()
-            .getProps();
+            "conf/kafka/consumer/avro.properties").builder().getProps();
         } catch (Exception e) {
             e.printStackTrace();
         }

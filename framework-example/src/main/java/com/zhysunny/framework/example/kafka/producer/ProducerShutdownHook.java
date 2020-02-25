@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.performance.kafka.producer;
+package com.zhysunny.framework.example.kafka.producer;
 
 import com.zhysunny.framework.common.business.ShutdownHook;
 import com.zhysunny.framework.common.business.Transfer;

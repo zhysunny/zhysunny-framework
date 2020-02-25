@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.kafka.console.message;
+package com.zhysunny.framework.example.kafka.consumer.console.message;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Output;
@@ -10,7 +10,7 @@ import com.zhysunny.framework.common.thread.ShutdownHookThread;
 import com.zhysunny.framework.common.thread.TransferThread;
 import com.zhysunny.framework.common.util.ThreadPoolUtil;
 import com.zhysunny.framework.example.kafka.KafkaHeartbeat;
-import com.zhysunny.framework.example.kafka.file.history.KafkaConsumerHistoryServiceImpl;
+import com.zhysunny.framework.example.kafka.consumer.file.history.KafkaConsumerHistoryServiceImpl;
 import com.zhysunny.framework.kafka.service.KafkaConsumerService;
 
 /**

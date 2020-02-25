@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.kafka.file.history;
+package com.zhysunny.framework.example.kafka.consumer.file.history;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Output;

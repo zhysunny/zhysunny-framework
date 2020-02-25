@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.performance.kafka.consumer;
+package com.zhysunny.framework.example.kafka.consumer;
 
 import com.zhysunny.framework.common.business.ShutdownHook;
 import com.zhysunny.framework.common.business.Transfer;

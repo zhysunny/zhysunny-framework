@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.console.kafka.avro;
+package com.zhysunny.framework.example.kafka.producer.avro;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Input;

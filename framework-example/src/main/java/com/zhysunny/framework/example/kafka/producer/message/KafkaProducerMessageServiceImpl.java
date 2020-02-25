@@ -1,4 +1,4 @@
-package com.zhysunny.framework.example.console.kafka.message;
+package com.zhysunny.framework.example.kafka.producer.message;
 
 import com.zhysunny.framework.common.properties.PropertiesReader;
 import com.zhysunny.framework.kafka.service.KafkaProducerService;
@@ -20,7 +20,8 @@ public class KafkaProducerMessageServiceImpl extends KafkaProducerService<String
     public void createProducer() {
         Properties props = null;
         try {
-            props = new PropertiesReader("conf/kafka/kafka.properties").builder().getProps();
+            props = new PropertiesReader("conf/kafka/servers.properties",
+            "conf/kafka/producer/message.properties").builder().getProps();
         } catch (Exception e) {
             e.printStackTrace();
         }

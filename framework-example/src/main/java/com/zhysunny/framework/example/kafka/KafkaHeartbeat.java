@@ -15,7 +15,7 @@ public class KafkaHeartbeat implements Heartbeat {
 
     @Override
     public void execute() {
-        LOGGER.info("已消费：{}", KafkaConstants.TOTAL.get());
+        LOGGER.info("已完成：{}", KafkaConstants.TOTAL.get());
     }
 
 }
