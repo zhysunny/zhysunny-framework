@@ -14,7 +14,11 @@ public enum EsExceptionType {
     /**
      * 更新删除必须指定具体的索引名，不能使用通配符
      */
-    INVALID_INDEX_NAME_EXCEPTION("invalid_index_name_exception");
+    INVALID_INDEX_NAME_EXCEPTION("invalid_index_name_exception"),
+    /**
+     * 更新数据时找不到对应的docid
+     */
+    DOCUMENT_MISSING_EXCEPTION("document_missing_exception");
 
     private String value;
 
