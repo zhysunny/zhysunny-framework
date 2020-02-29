@@ -18,11 +18,12 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>framework-common</artifactId>
         </dependency>
+        <!-- metrics start -->
         <dependency>
             <groupId>io.dropwizard.metrics</groupId>
             <artifactId>metrics-core</artifactId>
-            <version>3.1.2</version>
         </dependency>
+        <!-- metrics end -->
     </dependencies>
 
 </project>

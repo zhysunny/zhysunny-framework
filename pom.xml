@@ -76,6 +76,13 @@
                 <version>${project.version}</version>
             </dependency>
             <!-- module end -->
+            <!-- metrics start -->
+            <dependency>
+                <groupId>io.dropwizard.metrics</groupId>
+                <artifactId>metrics-core</artifactId>
+                <version>3.1.2</version>
+            </dependency>
+            <!-- metrics end -->
             <!-- junit start -->
             <dependency>
                 <groupId>junit</groupId>

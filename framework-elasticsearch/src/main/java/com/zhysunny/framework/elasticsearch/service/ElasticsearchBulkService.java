@@ -2,6 +2,7 @@ package com.zhysunny.framework.elasticsearch.service;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zhysunny.framework.common.business.Output;
+import com.zhysunny.framework.common.exception.UnImplementedMethodException;
 import com.zhysunny.framework.common.util.StringUtils;
 import com.zhysunny.framework.elasticsearch.constant.EsConstants;
 import com.zhysunny.framework.elasticsearch.handler.FailuresHandler;
@@ -55,14 +56,14 @@ public class ElasticsearchBulkService<E> implements Output<E> {
      * @param datas
      * @return
      */
-    public BulkRequestBuilder buildBulkRequest(Map<String, JSONObject> datas) {return null;}
+    public BulkRequestBuilder buildBulkRequest(Map<String, JSONObject> datas) {throw new UnImplementedMethodException();}
 
     /**
      * 批量写请求封装
      * @param datas
      * @return
      */
-    public BulkRequestBuilder buildBulkRequest(List<E> datas) {return null;}
+    public BulkRequestBuilder buildBulkRequest(List<E> datas) {throw new UnImplementedMethodException();}
 
     /**
      * 过滤字段为空的值
@@ -148,12 +149,12 @@ public class ElasticsearchBulkService<E> implements Output<E> {
 
     @Override
     public Object write(List<E> datas) {
-        return null;
+        throw new UnImplementedMethodException();
     }
 
     @Override
     public Object write(Map<String, E> datas) {
-        return null;
+        throw new UnImplementedMethodException();
     }
 
     @Override
