@@ -32,6 +32,7 @@ public class JmxServer {
             meter.mark(random.nextInt(10));
             Thread.sleep(5000);
         }
+        // -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.port=1000 -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false
     }
 
 }
