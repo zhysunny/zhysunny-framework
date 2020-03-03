@@ -19,6 +19,7 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
     protected KafkaProducer<K, V> producer;
     protected String name;
     protected String topic;
+    protected boolean running = true;
 
     public KafkaProducer<K, V> getProducer() {
         return producer;
@@ -111,6 +112,7 @@ public abstract class KafkaProducerService<K, V> implements Output<V> {
             producer.flush();
             producer.close();
         }
+        running = false;
     }
 
 }

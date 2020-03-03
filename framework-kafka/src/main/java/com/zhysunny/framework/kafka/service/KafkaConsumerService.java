@@ -16,6 +16,7 @@ public abstract class KafkaConsumerService<K, V> implements Input<V> {
     private static final long LEASE_TIME = 60000;
     protected KafkaConsumer<K, V> consumer;
     protected String name;
+    protected boolean running = true;
 
     public void setConsumer(KafkaConsumer consumer) {
         this.consumer = consumer;
@@ -65,5 +66,7 @@ public abstract class KafkaConsumerService<K, V> implements Input<V> {
         if (consumer != null) {
             consumer.close();
         }
+        running = false;
     }
+
 }

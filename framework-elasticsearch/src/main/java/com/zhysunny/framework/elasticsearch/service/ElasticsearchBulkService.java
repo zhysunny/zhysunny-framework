@@ -12,7 +12,6 @@ import org.elasticsearch.client.transport.NoNodeAvailableException;
 import org.elasticsearch.client.transport.TransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +38,13 @@ public class ElasticsearchBulkService<E> implements Output<E> {
     protected String type;
     protected TransportClient client;
     protected String name;
+    protected boolean running;
 
     public ElasticsearchBulkService(TransportClient client, String index, String type) {
         this.client = client;
         this.index = index;
         this.type = type;
+        this.running = true;
     }
 
     public ElasticsearchBulkService(TransportClient client) {
@@ -124,21 +125,28 @@ public class ElasticsearchBulkService<E> implements Output<E> {
             if (updateIndexLock != null) {
                 updateIndexLock.lock();
             }
-            try {
-                bulkResponse = bulkRequest.get();
-            } catch (NoNodeAvailableException e) {
-                LOGGER.error("cluster name:{},hosts:{},port:{}",
-                EsConstants.ES_CLUSTER_NAME_VALUE,
-                EsConstants.ES_SERVER_HOSTS_VALUE,
-                EsConstants.ES_HTTP_IMPORT_PORT_VALUE);
-                System.exit(1);
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage(), e);
-                System.exit(1);
-            } finally {
-                if (updateIndexLock != null) {
-                    updateIndexLock.unlock();
+            running = true;
+            while (running) {
+                try {
+                    bulkResponse = bulkRequest.get();
+                    running = false;
+                } catch (NoNodeAvailableException e) {
+                    LOGGER.error("无有效节点，cluster name:{},hosts:{},port:{}",
+                    EsConstants.ES_CLUSTER_NAME_VALUE,
+                    EsConstants.ES_SERVER_HOSTS_VALUE,
+                    EsConstants.ES_HTTP_IMPORT_PORT_VALUE);
+                    try {
+                        // 重试，无限次，直到执行close方法
+                        Thread.sleep(30 * 1000);
+                    } catch (InterruptedException e1) {
+                    }
+                } catch (Exception e) {
+                    LOGGER.error(e.getMessage(), e);
+                    System.exit(1);
                 }
+            }
+            if (updateIndexLock != null) {
+                updateIndexLock.unlock();
             }
             if (bulkResponse.hasFailures()) {
                 error = FailuresHandler.handler(bulkResponse, datas);
@@ -164,5 +172,7 @@ public class ElasticsearchBulkService<E> implements Output<E> {
 
     @Override
     public void close() {
+        running = false;
     }
+
 }

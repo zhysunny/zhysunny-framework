@@ -13,10 +13,12 @@ class HbaseService implements Closeable {
 
     protected Connection conn;
     protected Table table;
+    protected boolean running;
 
     public HbaseService(Connection conn, Table table) {
         this.conn = conn;
         this.table = table;
+        this.running = true;
     }
 
     @Override
@@ -25,6 +27,7 @@ class HbaseService implements Closeable {
         if (table != null) {
             table.close();
         }
+        running = false;
     }
 
 }

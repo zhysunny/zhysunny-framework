@@ -146,6 +146,8 @@ public abstract class BaseFileReadWrite<E> implements FileReadWrite<E> {
     @Override
     public void close() {
         FileUtils.close(br, fos);
+        br = null;
+        fos = null;
     }
 
     /**

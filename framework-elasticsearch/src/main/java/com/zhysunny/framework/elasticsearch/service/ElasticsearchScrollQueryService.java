@@ -24,6 +24,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
     private SearchResponse searchResponse;
     private String scrollId;
     protected String name;
+    protected boolean running;
 
     public ElasticsearchScrollQueryService(TransportClient client, String index) {
         this.client = client;
@@ -36,6 +37,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
         // 设置滚动查询
         .setScroll(new TimeValue(60000))
         .setExplain(true);
+        this.running = true;
     }
 
     public void scroll(int num) {
@@ -69,5 +71,7 @@ public class ElasticsearchScrollQueryService implements Input<JSONObject> {
 
     @Override
     public void close() {
+        this.running = false;
     }
+
 }
