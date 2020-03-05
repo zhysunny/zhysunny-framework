@@ -26,13 +26,9 @@ public class ListToListTransfer extends Transfer {
     public void transfer() throws IOException {
         List<?> in = input.read();
         final List<?> conversion = business != null ? business.conversion(in) : in;
-        Arrays.stream(outputs).forEach(output -> {
-            try {
-                output.write(conversion);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        for (Output output : outputs) {
+            output.write(conversion);
+        }
     }
 
 }

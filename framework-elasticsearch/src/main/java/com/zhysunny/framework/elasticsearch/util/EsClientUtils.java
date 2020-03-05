@@ -42,7 +42,7 @@ public class EsClientUtils implements ClientPoolUtils.Client<TransportClient> {
             }
             client = new PreBuiltTransportClient(settings).addTransportAddresses(addresses);
         } catch (Throwable e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         return client;
     }

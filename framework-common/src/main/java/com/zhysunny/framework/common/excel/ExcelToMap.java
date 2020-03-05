@@ -21,7 +21,7 @@ public class ExcelToMap {
     @Deprecated
     public Map<String, List<Map<String, String>>> read() throws Exception {
         // 转成map对象，数据异常值忽略
-        Map<String, List<Map<String, String>>> dataMap = new LinkedHashMap<String, List<Map<String, String>>>(reader.getSheetCount());
+        Map<String, List<Map<String, String>>> dataMap = new LinkedHashMap<>(reader.getSheetCount());
         for (int i = 0; i < reader.getSheetCount(); i++) {
             try {
                 reader.readTitle(i);
@@ -34,11 +34,11 @@ public class ExcelToMap {
                     }
                     dataList.add(map);
                 }
-                if (dataList.size() != 0) {
+                if (!dataList.isEmpty()) {
                     dataMap.put(sheetName, dataList);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                throw new Exception(e);
             }
         }
         reader.close();
@@ -47,12 +47,12 @@ public class ExcelToMap {
 
     public Map<String, Map<String, List<String>>> readLess() throws Exception {
         // 转成map对象
-        Map<String, Map<String, List<String>>> dataMap = new LinkedHashMap<String, Map<String, List<String>>>(reader.getSheetCount());
+        Map<String, Map<String, List<String>>> dataMap = new LinkedHashMap<>(reader.getSheetCount());
         for (int i = 0; i < reader.getSheetCount(); i++) {
             try {
                 reader.readTitle(i);
                 String sheetName = reader.getSheetName();
-                Map<String, List<String>> childMap = new LinkedHashMap<String, List<String>>();
+                Map<String, List<String>> childMap = new LinkedHashMap<>();
                 Map<String, String> map = null;
                 String key = null;
                 String value = null;
@@ -81,7 +81,7 @@ public class ExcelToMap {
                 }
             } catch (Exception e) {
                 // 数据异常值忽略
-                e.printStackTrace();
+                throw new Exception(e);
             }
         }
         reader.close();

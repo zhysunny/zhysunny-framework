@@ -23,13 +23,9 @@ public class ListToMapTransfer extends Transfer {
     public void transfer() throws IOException {
         List<?> in = input.read();
         final Map<String, ?> map = business.conversionToMap(in);
-        Arrays.stream(outputs).forEach(output -> {
-            try {
-                output.write(map);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        for (Output output : outputs) {
+            output.write(map);
+        }
     }
 
 }

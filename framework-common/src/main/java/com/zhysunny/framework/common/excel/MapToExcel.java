@@ -117,6 +117,8 @@ public class MapToExcel {
             heads = new LinkedHashSet<>();
             if (childMap != null && !childMap.isEmpty()) {
                 heads = childMap.keySet();
+            } else {
+                continue;
             }
             int count = 0;
             for (Map.Entry<String, List<String>> entryChild : childMap.entrySet()) {

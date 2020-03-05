@@ -137,8 +137,9 @@ public class ElasticsearchBulkService<E> implements Output<E> {
                     EsConstants.ES_HTTP_IMPORT_PORT_VALUE);
                     try {
                         // 重试，无限次，直到执行close方法
-                        Thread.sleep(30 * 1000);
+                        Thread.sleep(30000);
                     } catch (InterruptedException e1) {
+                        Thread.currentThread().interrupt();
                     }
                 } catch (Exception e) {
                     LOGGER.error(e.getMessage(), e);
@@ -148,7 +149,7 @@ public class ElasticsearchBulkService<E> implements Output<E> {
             if (updateIndexLock != null) {
                 updateIndexLock.unlock();
             }
-            if (bulkResponse.hasFailures()) {
+            if (bulkResponse != null && bulkResponse.hasFailures()) {
                 error = FailuresHandler.handler(bulkResponse, datas);
             }
         }

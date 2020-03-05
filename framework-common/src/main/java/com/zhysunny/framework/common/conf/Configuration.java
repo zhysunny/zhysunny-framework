@@ -17,8 +17,8 @@ import java.util.*;
  */
 public class Configuration {
 
-    private ArrayList<Object> defaultResources = new ArrayList<Object>();
-    private ArrayList<Object> finalResources = new ArrayList<Object>();
+    private ArrayList<Object> defaultResources = new ArrayList<>();
+    private ArrayList<Object> finalResources = new ArrayList<>();
     /**
      * 配置集合
      */
@@ -430,7 +430,6 @@ public class Configuration {
                 // properties配置的key值
                 key = (String)field.get(clz);
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
             }
             String value = props.getProperty(key);
             if (value == null || value.trim().length() == 0) {
