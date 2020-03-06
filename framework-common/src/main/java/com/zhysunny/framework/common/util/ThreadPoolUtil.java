@@ -28,10 +28,6 @@ public class ThreadPoolUtil {
      * 阻塞队列
      */
     private static final BlockingQueue<Runnable> QUEUE = new LinkedBlockingQueue<>();
-    /**
-     * 实例对象
-     */
-    private static volatile ThreadPoolUtil instance;
 
     /**
      * 线程池对象
@@ -63,15 +59,15 @@ public class ThreadPoolUtil {
     }
 
     private static ThreadPoolUtil init(int coreSize, int maxSize) {
-        //线程安全，双重检查(线程安全，延迟加载，效率高)
-        if (instance == null) {
-            synchronized (ThreadPoolUtil.class) {
-                if (instance == null) {
-                    instance = new ThreadPoolUtil(coreSize, maxSize);
-                }
-            }
+        return Inner.getInstance(coreSize, maxSize);
+    }
+
+    private static final class Inner {
+
+        private static final ThreadPoolUtil getInstance(int coreSize, int maxSize) {
+            return new ThreadPoolUtil(coreSize, maxSize);
         }
-        return instance;
+
     }
 
     /**
