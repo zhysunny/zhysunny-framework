@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 /**
  * HttpClient
@@ -17,11 +18,15 @@ public class HttpConnection {
 
     private HttpURLConnection connection;
 
-    public HttpConnection(String uri, String method) {
+    public HttpConnection(String uri, String method) throws IOException {
         httpConnect(uri, method);
     }
 
-    private void httpConnect(String uri, String method) {
+    public HttpConnection(String uri) throws IOException {
+        httpConnect(uri, "GET");
+    }
+
+    private void httpConnect(String uri, String method) throws IOException {
         try {
             // 创建连接
             URL url = new URL(uri);
@@ -34,9 +39,7 @@ public class HttpConnection {
             connection.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
             connection.connect();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new IOException(e);
         }
     }
 
@@ -44,7 +47,7 @@ public class HttpConnection {
      * 发送post请求
      * @param params json对象
      */
-    public String send(JSONObject params) {
+    public String send(JSONObject params) throws IOException {
         return send(params.toString());
     }
 
@@ -52,34 +55,28 @@ public class HttpConnection {
      * 发送post请求
      * @param params json字符串
      */
-    public String send(String params) {
-        OutputStream out = null;
+    public String send(String params) throws IOException {
         int code = 0;
         if (params != null && !"".equals(params)) {
+            OutputStream out = null;
             try {
                 out = connection.getOutputStream();
                 // 这样可以处理中文乱码问题
-                out.write(params.getBytes("UTF-8"));
+                out.write(params.getBytes(StandardCharsets.UTF_8));
                 out.flush();
                 code = connection.getResponseCode();
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new IOException(e);
             } finally {
-                try {
+                if (out != null) {
                     out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         }
         if (code == 200) {
             return get();
         } else {
-            try {
-                System.out.println(connection.getResponseMessage());
-            } catch (IOException e) {
-            }
-            return String.valueOf(code);
+            throw new IOException(code + connection.getResponseMessage());
         }
     }
 
@@ -87,21 +84,16 @@ public class HttpConnection {
      * 读取结果响应
      * @return
      */
-    public String get() {
-        StringBuffer sb = new StringBuffer(128);
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    public String get() throws IOException {
+        StringBuilder sb = new StringBuilder(128);
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));) {
             String lines;
             while ((lines = br.readLine()) != null) {
-                lines = new String(lines.getBytes(), "UTF-8");
+                lines = new String(lines.getBytes(), StandardCharsets.UTF_8);
                 sb.append(lines).append('\n');
             }
-            br.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
+            throw new IOException(e);
         }
         return sb.toString();
     }
@@ -110,12 +102,8 @@ public class HttpConnection {
      * 断开连接
      */
     public void close() {
-        try {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (connection != null) {
+            connection.disconnect();
         }
     }
 
