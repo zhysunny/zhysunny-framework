@@ -1,10 +1,10 @@
 package com.zhysunny.framework.common.util;
 
-import java.io.*;
+import java.io.Closeable;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -51,10 +51,14 @@ public class FileUtils {
      */
     public static void getFiles(File path, List<String> files, String... suffixs) {
         if (path.isFile()) {
-            for (String suffix : suffixs) {
-                if (path.getName().endsWith(suffix)) {
-                    files.add(path.getAbsolutePath());
-                    break;
+            if (suffixs == null || suffixs.length == 0) {
+                files.add(path.getAbsolutePath());
+            } else {
+                for (String suffix : suffixs) {
+                    if (path.getName().endsWith(suffix)) {
+                        files.add(path.getAbsolutePath());
+                        break;
+                    }
                 }
             }
         } else {
